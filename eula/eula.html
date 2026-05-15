@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Пользовательское соглашение</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/x-icon" href="../client.png">
+      <link rel="stylesheet" href="../assets/css/main.css">
+          <script src="../config/config.js"></script>
+
+    
+    <style>
+        :root {
+            --bg-color: #050505;
+            --card-bg: rgba(15, 15, 15, 0.6);
+            --card-border: rgba(255, 255, 255, 0.06);
+            --text-main: #ffffff;
+            --text-muted: rgba(255, 255, 255, 0.5);
+            --accent-bg: rgba(181, 125, 255, 0.1);
+            --accent-r: 181;
+            --accent-g: 125;
+            --accent-b: 255;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-color);
+            color: var(--text-main);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+       
+
+       
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-family: 'Unbounded', sans-serif;
+            font-weight: 600;
+            font-size: 1.2rem;
+            text-decoration: none;
+            color: var(--text-main);
+            transition: transform 0.2s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.02);
+        }
+
+        .logo-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--text-main);
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .lang-switcher {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--card-border);
+            border-radius: 8px;
+            padding: 5px;
+        }
+
+        .lang-btn {
+            padding: 6px 12px;
+            border: none;
+            background: transparent;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            cursor: pointer;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+            font-weight: 500;
+        }
+
+        .lang-btn:hover {
+            color: var(--text-main);
+        }
+
+        .terms-section {
+            padding: 120px 30px 80px;
+            min-height: 100vh;
+        }
+
+        .section-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .terms-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--card-border);
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .terms-card-header {
+            padding: 30px 40px;
+            border-bottom: 1px solid var(--card-border);
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .terms-icon {
+            width: 56px;
+            height: 56px;
+            background: var(--accent-bg);
+            border: 1px solid var(--accent-border);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: var(--accent-color);
+        }
+
+        .terms-header-text h1 {
+            font-family: 'Unbounded', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .terms-header-text p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .terms-card-body {
+            max-height: 65vh;
+            overflow-y: auto;
+            padding: 40px;
+        }
+
+        .terms-card-body::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .terms-card-body::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 10px;
+        }
+
+        .terms-card-body::-webkit-scrollbar-thumb {
+            background: var(--accent-border);
+            border-radius: 10px;
+        }
+
+        .terms-card-body::-webkit-scrollbar-thumb:hover {
+            background: var(--accent-color);
+        }
+
+        /* Content Styles */
+        .terms-content h2 {
+            font-family: 'Unbounded', sans-serif;
+            font-size: 1.1rem;
+            color: var(--text-main);
+            margin: 35px 0 18px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--card-border);
+        }
+
+        .terms-content h2:first-child {
+            margin-top: 0;
+        }
+
+        .terms-content h3 {
+            font-size: 1rem;
+            color: var(--text-main);
+            margin: 25px 0 12px;
+        }
+
+        .terms-content p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+
+        .terms-content ul,
+        .terms-content ol {
+            margin: 15px 0;
+            padding-left: 25px;
+            color: var(--text-muted);
+        }
+
+        .terms-content li {
+            margin-bottom: 10px;
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+
+        .terms-content strong {
+            color: var(--text-main);
+            font-weight: 500;
+        }
+
+        .terms-content a {
+            color: var(--accent-color);
+            text-decoration: none;
+            transition: opacity 0.2s ease;
+        }
+
+        .terms-content a:hover {
+            opacity: 0.8;
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                padding: 15px 20px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .terms-section {
+                padding: 100px 15px 60px;
+            }
+
+            .terms-card-body {
+                padding: 25px;
+                max-height: 60vh;
+            }
+
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-gradient-1"></div>
+    <div class="bg-gradient-2"></div>
+    <div class="bg-gradient-3"></div>
+
+    <script src="../js/header.js"></script>
+<div id="header-container-home"></div>
+    
+
+    <section class="terms-section">
+        <div class="section-container">
+            <div class="terms-card">
+                <div class="terms-card-header">
+
+                    <div class="terms-header-text">
+                        <h1>Пользовательское соглашение</h1>
+                        <p>Последнее обновление: 2024.04.15</p>
+                    </div>
+                </div>
+                <div class="terms-card-body">
+                    <div class="terms-content">
+                        <h2>1. Общие положения</h2>
+                        <p>Администратор сайта, далее <strong>«Продавец»</strong>, публикует Публичную оферту о реализации Услуг, размещенных на официальном сайте Продавца <strong><span id="client-placeholder"></span></strong></p>
+                        <p>В соответствии со статьей 437 Гражданского Кодекса Российской Федерации (ГК РФ) данный документ является публичной офертой, и в случае принятия изложенных ниже условий физическое лицо, производящее акцепт этой оферты, осуществляет оплату Услуги Продавца в соответствии с условиями настоящего Договора. В соответствии с пунктом 3 статьи 438 ГК РФ, оплата Услуги Покупателем является акцептом оферты, что считается равносильным заключению Договора на условиях, изложенных в оферте.</p>
+                        <p>На основании вышеизложенного внимательно ознакомьтесь с текстом публичной оферты, и, если вы не согласны с каким-либо пунктом оферты, Вам предлагается отказаться от использования Услуг, предоставляемых Продавцом.</p>
+                        <p>В настоящей оферте, если контекст не требует иного, нижеприведенные термины имеют следующие значения:</p>
+                        <ul>
+                            <li><strong>«Оферта»</strong> — публичное предложение Продавца, адресованное любому физическому лицу, заключить с ним договор на существующих условиях, содержащихся в Договоре, включая все его приложения.</li>
+                            <li><strong>«Покупатель»</strong> — физическое лицо, заключившее с Продавцом Договор на условиях, содержащихся в Договоре.</li>
+                            <li><strong>«Акцепт»</strong> — полное и безоговорочное принятие Покупателем условий Договора.</li>
+                            <li><strong>«Услуга»</strong> — перечень наименований ассортимента, представленный на официальном интернет-сайте.</li>
+                            <li><strong>«Заказ»</strong> — отдельные позиции из ассортиментного перечня Услуг, указанные Покупателем при оформлении заявки на интернет-сайте.</li>
+                        </ul>
+
+                        <h2>2. Предмет договора</h2>
+                        <p>Продавец реализует Услуги в соответствии с действующим прейскурантом, опубликованным на интернет-сайте Продавца в интерактивной форме, а Покупатель производит оплату и принимает Услугу в соответствии с условиями настоящего Договора.</p>
+                        <p>Настоящий Договор и приложения к нему являются официальными документами Продавца и неотъемлемой частью оферты.</p>
+
+                        <h2>3. Оформление заказа</h2>
+                        <p>Заказ Услуги осуществляется Покупателем через Интернет-сайт <strong>«<span id="client-placeholder"></span>»</strong></p>
+                        <p>При регистрации на интернет-сайте Продавца Покупатель обязуется предоставить следующую регистрационную информацию о себе: никнейм, адрес электронной почты.</p>
+                        <p>Оплата Покупателем самостоятельно оформленного на интернет-сайте Заказа означает согласие Покупателя с условиями настоящего Договора. День оплаты Заказа является датой заключения Договора между Продавцом и Покупателем.</p>
+                        <p>Все информационные материалы, представленные на сайте «<span id="client-placeholder"></span>», носят справочный характер и не могут в полной мере передавать достоверную информацию об определенных свойствах и характеристиках Услуги. В случае возникновения у Покупателя вопросов, касающихся Услуги, перед оформлением Заказа ему необходимо обратиться за консультацией к Продавцу.</p>
+                        <p>Срок исполнения Заказа - 1 рабочий день. Срок исполнения Заказа в исключительных случаях может быть оговорен с Покупателем индивидуально в зависимости от типа предоставляемых Услуг. В случае невозможности оказания Услуги Продавцом, в том числе по причинам, не зависящим от последнего, Продавец вправе аннулировать указанную Услугу из Заказа Покупателя. Продавец обязуется уведомить Покупателя об изменении его Заказа через Электронную почту.</p>
+                        <p>Заказ считается выполненным в момент принятия услуги Покупателем.</p>
+                        <p>В случае предоставления Покупателем недостоверной информации его контактных данных Продавец за ненадлежащее исполнение Заказа ответственности не несет.</p>
+                        <p>В случае ненадлежащего исполнения Заказа по вине Продавца повторная реализация Заказа осуществляется бесплатно.</p>
+
+                        <h2>4. Оплата заказа</h2>
+                        <p>Оплата исполненного Заказа осуществляется путем передачи Покупателем денежных средств с помощью электронных платежных средств на счет Продавца. Подтверждением оплаты исполненного Заказа является чек.</p>
+                        <p>Цены на Услуги, указанные на интернет-сайте «<span id="client-placeholder"></span>», могут быть изменены Продавцом в одностороннем порядке без уведомления Покупателя.</p>
+                        <p>Денежные средства принимаются одним способом: безналичным платежом.</p>
+
+                        <h2>5. Возврат заказа</h2>
+                        <p>В соответствии с п. 4. ст. 26.1. Закона РФ № 2300-I «О Защите прав потребителей» Покупатель вправе отказаться от заказанной Услуги в любое время до момента исполнения Заказа.</p>
+                        <p>В случае предоставления Услуги ненадлежащего качества, Покупатель обязуется обратиться к Продавцу в максимально короткие сроки.</p>
+                        <p>В соответствии со ст. 22 Закона РФ № 2300-I «О Защите прав потребителей» уплаченная Покупателем сумма за Услугу ненадлежащего качества подлежит возврату Покупателю в течение 10 календарных дней с момента предъявления соответствующего требования. Возврат денежных средств осуществляется на электронный счет Покупателя в течение 5-ти рабочих дней.</p>
+                        <p>Для возврата денежных средств за Услугу надлежащего качества (см. приложение 1), должны быть выполнены следующие условия: отсутствует успешный запуск программного обеспечения, который фиксируется на интернет-сервере Продавца при открытии меню программы, запущенной в игре; отсутствует отказ Покупателя от помощи Продавца, при невозможности запуска программного обеспечения на компьютере Покупателя, вызванной сторонним программным обеспечением, или другой проблемой, которую может устранить Продавец, предоставив инструкции по устранению для Покупателя.</p>
+                        <p>В остальных случаях возврат денежных средств за услугу надлежащего качества невозможен.</p>
+                        <p>Для возврата денежных средств за услугу ненадлежащего качества (см. приложение 1), составляются накладная или акт о возврате денежных средств, в котором указываются: полное фирменное наименование Продавца; фамилия, имя и отчество; наименование Услуги; дата оказания Услуги; сумма, подлежащая возврату; подписи Продавца и Покупателя.</p>
+                        <p>Возможен возврат денежных средств в случае отсутствия факта начала оказания услуги.</p>
+                        <p>Покупатель имеет право предъявить требование Продавцу о возврате стоимости Услуги не позднее чем через 7 (семь) дней с даты принятия Заказа.</p>
+                        <p>Для возврата денежных средств на банковскую карту Заказчику необходимо заполнить «Заявление о возврате денежных средств», которое высылается по требованию Компанией на электронный адрес Заказчика, и отправить его по электронному адресу <a href="mailto:support@<span id="client-placeholder"></span>">support@<span id="client-placeholder"></span></a>. Возврат денежных средств будет осуществлен на банковский счет Заказчика, с которого производилась оплата Услуги, в течение 5 (пяти) рабочих дней со дня получения «Заявление о возврате денежных средств» Компанией.</p>
+                        <p>Срок рассмотрения Заявления и возврата денежных средств Заказчику начинает исчисляться с момента получения Компанией Заявления и рассчитывается в рабочих днях без учета праздников/выходных дней. Если заявление поступило Компании после 15.00 рабочего дня или в праздничный/выходной день, моментом получения Компанией Заявления считается следующий рабочий день.</p>
+
+                        <h2>6. Права, обязанности и ответственность</h2>
+                        <p>Продавец не несет ответственности за ненадлежащее использование Услуг Покупателем, заказанных на интернет-сайте или через Оператора.</p>
+                        <p>Данный сайт и вся содержащаяся на нем информация и материалы представлены Вам по принципу «как есть», без каких-либо гарантий.</p>
+                        <p>Мы (в т.ч. наши партнеры) не несем ответственность за прямой, косвенный, случайный или иной вид ущерба (включая, помимо всего прочего, любого рода баны и блокировки), вследствие использования или невозможности использования содержания, материалов или функционала данного сайта.</p>
+                        <p>Продавец вправе передавать свои права и обязанности по исполнению Заказов третьим лицам.</p>
+                        <p>Все претензии по ненадлежащему исполнению заказа Покупатель вправе направить на адрес электронной почты <a href="mailto:support@<span id="client-placeholder"></span>">support@<span id="client-placeholder"></span></a>. Вся поступившая информация обрабатывается в течение 10 (десяти) рабочих дней.</p>
+                        <p>Покупатель не в праве передавать, продавать или обменивать доступ к Услуге, оказанную Продавцом.</p>
+                        <p>Продавец не несёт ответственности за последствия использования программного обеспечения Покупателем, включая, но не ограничиваясь: нарушением правил сторонних игровых серверов, блокировкой игровых аккаунтов, ограничением доступа к игровым платформам или санкциями со стороны третьих лиц.</p>
+                        <p>Программное обеспечение предоставляется исключительно для ознакомительных и учебных целей. Продавец не поощряет и не рекомендует использовать программное обеспечение для нарушения пользовательских соглашений Mojang, Microsoft или администраторов любых частных серверов Minecraft, включая, но не ограничиваясь: Anarchia, Hypixel и другими.</p>
+                        <p>Покупатель принимает на себя полную ответственность за последствия использования программного обеспечения и обязуется самостоятельно оценивать риски, связанные с его применением в игровых средах.</p>
+                        <p>Продавец не несёт ответственности за какие-либо убытки, прямо или косвенно вызванные использованием программного обеспечения Покупателем в онлайн-играх, в том числе, но не ограничиваясь, техническими сбоями, санкциями от третьих лиц, блокировками аккаунтов или утратой доступа к игровым сервисам.</p>
+                        <p>Программное обеспечение не содержит вредоносного кода, не предназначено для несанкционированного доступа, разрушения, нарушения или обхода защиты компьютерных систем, в том числе игровых серверов. Его функции реализуются исключительно на стороне клиента и под полным контролем пользователя.</p>
+
+                        <h2>7. Минимальные системные требования</h2>
+                        <ul>
+                            <li>Процессор: Intel Core i3-3210 или AMD A8-7600 APU или эквивалентный процессор</li>
+                            <li>Оперативная память: 4 GB RAM</li>
+                            <li>Видеокарта: Intel HD Graphics 4000 или AMD Radeon R5 с OpenGL 4.4 поддержкой</li>
+                            <li>Место на жестком диске: 8 GB свободного пространства</li>
+                            <li>Операционная система: Windows 10, Windows 11 или выше</li>
+                        </ul>
+
+                        <h3>Рекомендуемые системные требования</h3>
+                        <ul>
+                            <li>Процессор: Intel Core i5-4690 или AMD A10-7800 или эквивалентный процессор</li>
+                            <li>Оперативная память: 8 GB RAM</li>
+                            <li>Видеокарта: NVIDIA GeForce 700 Series или AMD Radeon Rx 200 Series с OpenGL 4.5 поддержкой</li>
+                            <li>Место на жестком диске: 12 GB свободного пространства</li>
+                            <li>Операционная система: Windows 10, Windows 11 или выше</li>
+                        </ul>
+
+                        <h2>8. Приложение 1</h2>
+                        <p><strong>Услуга надлежащего качества</strong> — программное обеспечение, предоставленное Покупателю, работающее без нареканий на компьютере Продавца и других Покупателей, что подтверждается информационной системой Продавца, в которой зафиксированы успешные использования программного обеспечения всех Покупателей.</p>
+                        <p style="margin-top: 30px; text-align: right; font-style: italic; color: var(--text-muted);">— Администратор сайта</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+<div id="footer-container"></div>
+
+    <script src="../js/footer.js"></script>
+
+    <script>
+
+document.getElementById("client-placeholder").textContent = CONFIG.clientLink;
+
+        const translations = {
+            en: {
+                nav_home: "Home", nav_products: "Products", nav_privacy: "Privacy", nav_terms: "Terms",
+                edit_banner: "Change Banner",
+                label_login: "Login", label_role: "Role", label_registered: "Registration Date",
+                label_sub_start: "Subscription Issued", label_sub_end: "Subscription Until",
+                actions_title: "Actions",
+                action_download: "Download Client", action_ram: "Change RAM",
+                action_key: "Activate Key", action_token: "Copy Token", action_logout: "Logout",
+                modal_ram_title: "Change RAM", modal_key_title: "Activate Key", modal_token_title: "Your Token",
+                key_label: "Enter activation key",
+                btn_save: "Save", btn_activate: "Activate", btn_copy: "Copy",
+                toast_ram_saved: "RAM changed to", toast_key_activated: "Key successfully activated!",
+                toast_key_error: "Enter activation key", toast_token_copied: "Token copied to clipboard",
+                toast_download: "Download started...", toast_logout: "Are you sure you want to logout?",
+                toast_avatar: "Avatar updated", toast_banner: "Banner updated",
+                toast_uid_copied: "UID copied to clipboard",
+                footer_description: "The ultimate gaming enhancement solution. Elevate your gameplay with powerful features and undetectable bypasses.",
+                footer_navigation: "Navigation", footer_support: "Support",
+                footer_download: "Download", footer_faq: "EULA", footer_contact: "Contact Us",
+                footer_rights: "All rights reserved."
+            },
+            ru: {
+                nav_home: "Главная", nav_products: "Продукты", nav_privacy: "Приватность", nav_terms: "Условия",
+                edit_banner: "Изменить баннер",
+                label_login: "Логин", label_role: "Роль", label_registered: "Дата регистрации",
+                label_sub_start: "Дата выдачи подписки", label_sub_end: "Подписка до",
+                actions_title: "Действия",
+                action_download: "Скачать клиент", action_ram: "Изменить RAM",
+                action_key: "Активировать ключ", action_token: "Скопировать токен", action_logout: "Выйти",
+                modal_ram_title: "Изменить RAM", modal_key_title: "Активировать ключ", modal_token_title: "Ваш токен",
+                key_label: "Введите ключ активации",
+                btn_save: "Сохранить", btn_activate: "Активировать", btn_copy: "Скопировать",
+                toast_ram_saved: "RAM изменён на", toast_key_activated: "Ключ успешно активирован!",
+                toast_key_error: "Введите ключ активации", toast_token_copied: "Токен скопирован в буфер обмена",
+                toast_download: "Загрузка началась...", toast_logout: "Вы уверены, что хотите выйти?",
+                toast_avatar: "Аватар обновлён", toast_banner: "Баннер обновлён",
+                toast_uid_copied: "UID скопирован в буфер обмена",
+                footer_description: "Лучшее решение для улучшения игры. Поднимите свой геймплей с мощными функциями и необнаруживаемыми обходами.",
+              
+                footer_navigation: "Навигация", footer_support: "Поддержка",
+                footer_download: "Скачать", footer_faq: "EULA", footer_contact: "Связаться",
+                footer_rights: "Все права защищены."
+            }
+        };
+
+        let currentLang = localStorage.getItem('lang') || 'en';
+
+        function setLanguage(lang) {
+            currentLang = lang;
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.textContent === lang.toUpperCase());
+            });
+            document.querySelectorAll('[data-lang]').forEach(el => {
+                const key = el.getAttribute('data-lang');
+                if (translations[lang][key]) el.textContent = translations[lang][key];
+            });
+            document.documentElement.lang = lang;
+            localStorage.setItem('lang', lang);
+        }
+
+        function hexToRgb(hex) {
+            const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+            return result ? { r: parseInt(result[1], 16), g: parseInt(result[2], 16), b: parseInt(result[3], 16) } : { r: 181, g: 125, b: 255 };
+        }
+
+        function adjustColor(hex, amount) {
+            const rgb = hexToRgb(hex);
+            const adjust = (val) => Math.max(0, Math.min(255, val + amount));
+            const toHex = (val) => val.toString(16).padStart(2, '0');
+            return `#${toHex(adjust(rgb.r))}${toHex(adjust(rgb.g))}${toHex(adjust(rgb.b))}`;
+        }
+
+        function applyConfig() {
+            if (typeof CONFIG !== 'undefined') {
+                document.querySelectorAll('.client-name').forEach(el => el.textContent = CONFIG.clientName);
+                document.title = CONFIG.clientName + " - Dashboard";
+                const root = document.documentElement;
+                const rgb = hexToRgb(CONFIG.accentColor);
+                root.style.setProperty('--accent-color', CONFIG.accentColor);
+                root.style.setProperty('--accent-hover', adjustColor(CONFIG.accentColor, -20));
+                root.style.setProperty('--accent-r', rgb.r);
+                root.style.setProperty('--accent-g', rgb.g);
+                root.style.setProperty('--accent-b', rgb.b);
+            }
+            setLanguage(currentLang);
+        }
+
+        document.addEventListener('DOMContentLoaded', applyConfig);
+    </script>
+
+</body>
+</html>

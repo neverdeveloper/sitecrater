@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <script src="../config/config.js"></script>
+    <style>
+        .admin-section {
+            padding: 120px 50px 60px;
+            min-height: 100vh;
+        }
+        .admin-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            border-bottom: 2px solid var(--card-border);
+        }
+        .admin-tab {
+            padding: 12px 24px;
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            font-family: 'Unbounded', sans-serif;
+            font-weight: 600;
+            font-size: 0.9rem;
+            border-bottom: 3px solid transparent;
+            transition: all 0.2s ease;
+        }
+        .admin-tab:hover {
+            color: var(--text-main);
+        }
+        .admin-tab.active {
+            color: var(--accent-color);
+            border-bottom-color: var(--accent-color);
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        .admin-card {
+            background: rgba(15, 15, 15, 0.6);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--card-border);
+            border-radius: 18px;
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+        .admin-card h2 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .form-row {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        .form-group {
+            flex: 1;
+        }
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+        .form-input {
+            width: 100%;
+            padding: 12px 16px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            color: var(--text-main);
+            font-size: 1rem;
+        }
+        .btn-generate {
+            padding: 12px 24px;
+            background: var(--accent-color);
+            color: #000;
+            border: none;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: 'Unbounded', sans-serif;
+        }
+        .btn-generate:hover {
+            opacity: 0.9;
+        }
+        .keys-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .keys-table th,
+        .keys-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid var(--card-border);
+        }
+        .keys-table th {
+            color: var(--text-muted);
+            font-weight: 600;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+        }
+        .key-code {
+            font-family: 'Courier New', monospace;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+        }
+        .badge {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        .badge.used {
+            background: rgba(244, 67, 54, 0.2);
+            color: #f44336;
+        }
+        .badge.active {
+            background: rgba(76, 175, 80, 0.2);
+            color: #4CAF50;
+        }
+        .btn-delete {
+            padding: 6px 12px;
+            background: rgba(244, 67, 54, 0.1);
+            border: 1px solid rgba(244, 67, 54, 0.3);
+            color: #f44336;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.85rem;
+        }
+        .btn-delete:hover {
+            background: rgba(244, 67, 54, 0.2);
+        }
+        .btn-action {
+            padding: 6px 12px;
+            border: 1px solid var(--card-border);
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-main);
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            margin-right: 5px;
+        }
+        .btn-action:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        .user-role {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        .user-role.default {
+            background: rgba(158, 158, 158, 0.2);
+            color: #9e9e9e;
+        }
+        .user-role.user {
+            background: rgba(76, 175, 80, 0.2);
+            color: #4CAF50;
+        }
+        .user-role.admin {
+            background: rgba(255, 107, 107, 0.2);
+            color: #ff6b6b;
+        }
+        .notification {
+            position: fixed;
+            top: 30px;
+            right: 30px;
+            background: rgba(20, 20, 20, 0.95);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            padding: 16px 24px;
+            display: none;
+            align-items: center;
+            gap: 12px;
+            z-index: 9999;
+        }
+        .notification.show {
+            display: flex;
+        }
+        .notification.success {
+            border-color: #4CAF50;
+        }
+        .notification.error {
+            border-color: #f44336;
+        }
+    </style>
+</head>
+<body>
+
+<div class="bg-gradient-1"></div>
+<div class="bg-gradient-2"></div>
+<div class="bg-gradient-3"></div>
+
+<div id="header-container-cabinet"></div>
+<script src="../js/header.js"></script>
+
+<section class="admin-section">
+    <div class="section-container">
+        <h1 style="font-size: 2rem; margin-bottom: 30px; font-family: 'Unbounded', sans-serif;">
+            <i class="fa-solid fa-shield-halved"></i> Admin Panel
+        </h1>
+
+        <div class="admin-tabs">
+            <button class="admin-tab active" onclick="switchTab('keys')">
+                <i class="fa-solid fa-key"></i> Ключи
+            </button>
+            <button class="admin-tab" onclick="switchTab('users')">
+                <i class="fa-solid fa-users"></i> Пользователи
+            </button>
+        </div>
+
+        <!-- Вкладка ключей -->
+        <div id="keysTab" class="tab-content active">
+            <div class="admin-card">
+                <h2><i class="fa-solid fa-key"></i> Генерация ключей</h2>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Тип ключа</label>
+                        <select class="form-input" id="keyType">
+                            <option value="MONTH">Месяц</option>
+                            <option value="3MONTH">3 Месяца</option>
+                            <option value="LIFETIME">Навсегда</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Длительность (дней)</label>
+                        <input type="number" class="form-input" id="keyDuration" value="30" min="1">
+                    </div>
+                </div>
+                <button class="btn-generate" onclick="generateKey()">
+                    <i class="fa-solid fa-plus"></i> Сгенерировать ключ
+                </button>
+            </div>
+
+            <div class="admin-card">
+                <h2><i class="fa-solid fa-list"></i> Список ключей</h2>
+                <table class="keys-table">
+                    <thead>
+                        <tr>
+                            <th>Ключ</th>
+                            <th>Тип</th>
+                            <th>Дней</th>
+                            <th>Статус</th>
+                            <th>Создан</th>
+                            <th>Истекает</th>
+                            <th>Действия</th>
+                        </tr>
+                    </thead>
+                    <tbody id="keysTableBody">
+                        <tr><td colspan="7" style="text-align: center; color: var(--text-muted);">Загрузка...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Вкладка пользователей -->
+        <div id="usersTab" class="tab-content">
+            <div class="admin-card">
+                <h2><i class="fa-solid fa-users"></i> Управление пользователями</h2>
+                <table class="keys-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Логин</th>
+                            <th>Email</th>
+                            <th>Роль</th>
+                            <th>Подписка</th>
+                            <th>Регистрация</th>
+                            <th>Действия</th>
+                        </tr>
+                    </thead>
+                    <tbody id="usersTableBody">
+                        <tr><td colspan="7" style="text-align: center; color: var(--text-muted);">Загрузка...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="notification" id="notification">
+    <i class="fa-solid fa-check-circle"></i>
+    <span id="notificationText"></span>
+</div>
+
+<div id="footer-container"></div>
+<script src="../js/footer.js"></script>
+
+<script>
+    const API_URL = CONFIG.clientLinkUrl;
+
+    function switchTab(tab) {
+        document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+        
+        event.target.classList.add('active');
+        document.getElementById(tab + 'Tab').classList.add('active');
+        
+        if (tab === 'users') {
+            loadUsers();
+        } else if (tab === 'keys') {
+            loadKeys();
+        }
+    }
+
+    function showNotification(message, type = 'success') {
+        const notification = document.getElementById('notification');
+        const text = document.getElementById('notificationText');
+        notification.className = 'notification ' + type + ' show';
+        text.textContent = message;
+        notification.querySelector('i').className = type === 'success' ? 'fa-solid fa-check-circle' : 'fa-solid fa-times-circle';
+        setTimeout(() => notification.classList.remove('show'), 3000);
+    }
+
+    async function generateKey() {
+        const type = document.getElementById('keyType').value;
+        const duration = parseInt(document.getElementById('keyDuration').value);
+
+        if (!duration || duration <= 0) {
+            showNotification('Введите корректную длительность', 'error');
+            return;
+        }
+
+        try {
+            const token = localStorage.getItem('token');
+            const response = await fetch(`${API_URL}/keys/generate`, {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ type, duration })
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                showNotification(`Ключ создан: ${data.key}`, 'success');
+                loadKeys();
+            } else {
+                showNotification('Ошибка создания ключа', 'error');
+            }
+        } catch (error) {
+            showNotification('Ошибка соединения', 'error');
+        }
+    }
+
+    async function loadKeys() {
+        try {
+            const token = localStorage.getItem('token');
+            const response = await fetch(`${API_URL}/keys/list`, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+
+            if (response.ok) {
+                const keys = await response.json();
+                const tbody = document.getElementById('keysTableBody');
+                
+                if (keys.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="7" style="text-align: center; color: var(--text-muted);">Нет ключей</td></tr>';
+                    return;
+                }
+
+                tbody.innerHTML = keys.map(key => `
+                    <tr>
+                        <td><span class="key-code">${key.key}</span></td>
+                        <td>${key.type}</td>
+                        <td>${key.duration}</td>
+                        <td><span class="badge ${key.used ? 'used' : 'active'}">${key.used ? 'Использован' : 'Активен'}</span></td>
+                        <td>${new Date(key.createdAt).toLocaleDateString()}</td>
+                        <td>${new Date(key.expiresAt).toLocaleDateString()}</td>
+                        <td><button class="btn-delete" onclick="deleteKey('${key.key}')"><i class="fa-solid fa-trash"></i></button></td>
+                    </tr>
+                `).join('');
+            }
+        } catch (error) {
+            console.error('Error loading keys:', error);
+        }
+    }
+
+    async function deleteKey(key) {
+        if (!confirm('Удалить этот ключ?')) return;
+
+        try {
+            const token = localStorage.getItem('token');
+            const response = await fetch(`${API_URL}/keys/${key}`, {
+                method: 'DELETE',
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+
+            if (response.ok) {
+                showNotification('Ключ удалён', 'success');
+                loadKeys();
+            } else {
+                showNotification('Ошибка удаления', 'error');
+            }
+        } catch (error) {
+            showNotification('Ошибка соединения', 'error');
+        }
+    }
+
+    async function loadUsers() {
+        try {
+            const token = localStorage.getItem('token');
+            const response = await fetch(`${API_URL}/admin/users`, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+
+            if (response.ok) {
+                const users = await response.json();
+                const tbody = document.getElementById('usersTableBody');
+                
+                if (users.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="7" style="text-align: center; color: var(--text-muted);">Нет пользователей</td></tr>';
+                    return;
+                }
+
+                tbody.innerHTML = users.map(user => `
+                    <tr>
+                        <td>${user.id}</td>
+                        <td>${user.username}</td>
+                        <td>${user.email}</td>
+                        <td><span class="user-role ${user.role.toLowerCase()}">${user.role}</span></td>
+                        <td>${user.subscription || 'Нет'}</td>
+                        <td>${new Date(user.regDate).toLocaleDateString()}</td>
+                        <td>
+                            <button class="btn-action" onclick="changeRole(${user.id}, '${user.role}')">
+                                <i class="fa-solid fa-user-tag"></i> Роль
+                            </button>
+                            <button class="btn-action" onclick="grantSub(${user.id})">
+                                <i class="fa-solid fa-gift"></i> Подписка
+                            </button>
+                            <button class="btn-delete" onclick="deleteUser(${user.id})">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
+                        </td>
+                    </tr>
+                `).join('');
+            }
+        } catch (error) {
+            console.error('Error loading users:', error);
+        }
+    }
+
+    async function deleteUser(userId) {
+        if (!confirm('Удалить этого пользователя?')) return;
+
+        try {
+            const token = localStorage.getItem('token');
+            const response = await fetch(`${API_URL}/admin/users/${userId}`, {
+                method: 'DELETE',
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+
+            if (response.ok) {
+                showNotification('Пользователь удалён', 'success');
+                loadUsers();
+            } else {
+                const error = await response.json();
+                showNotification(error.message || 'Ошибка удаления', 'error');
+            }
+        } catch (error) {
+            showNotification('Ошибка соединения', 'error');
+        }
+    }
+
+    async function changeRole(userId, currentRole) {
+        const roles = ['Default', 'USER', 'ADMIN'];
+        const newRole = prompt(`Выберите роль (${roles.join(', ')}):`, currentRole);
+        
+        if (!newRole || !roles.includes(newRole)) return;
+
+        try {
+            const token = localStorage.getItem('token');
+            const response = await fetch(`${API_URL}/admin/users/${userId}/role`, {
+                method: 'PATCH',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ role: newRole })
+            });
+
+            if (response.ok) {
+                showNotification('Роль изменена', 'success');
+                loadUsers();
+            } else {
+                const error = await response.json();
+                showNotification(error.message || 'Ошибка изменения роли', 'error');
+            }
+        } catch (error) {
+            showNotification('Ошибка соединения', 'error');
+        }
+    }
+
+    async function grantSub(userId) {
+        const days = prompt('Введите количество дней подписки:', '30');
+        
+        if (!days || isNaN(days) || days <= 0) return;
+
+        try {
+            const token = localStorage.getItem('token');
+            const response = await fetch(`${API_URL}/admin/users/${userId}/subscription`, {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ duration: parseInt(days) })
+            });
+
+            if (response.ok) {
+                showNotification('Подписка выдана', 'success');
+                loadUsers();
+            } else {
+                showNotification('Ошибка выдачи подписки', 'error');
+            }
+        } catch (error) {
+            showNotification('Ошибка соединения', 'error');
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const token = localStorage.getItem('token');
+        if (!token) {
+            window.location.href = '../';
+            return;
+        }
+        loadKeys();
+    });
+</script>
+
+</body>
+</html>

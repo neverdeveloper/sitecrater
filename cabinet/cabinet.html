@@ -1,0 +1,1674 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/x-icon" href="../client.png">
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <script src="../config/config.js"></script>
+
+    <style>
+        .dashboard-section {
+            padding-top: 120px;
+            padding-bottom: 60px;
+        }
+
+        .profile-banner {
+            position: relative;
+            height: 280px;
+            border-radius: 20px;
+            overflow: hidden;
+            margin-bottom: 30px;
+            border: 1px solid var(--card-border);
+            background: var(--card-bg);
+        }
+
+        .banner-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: brightness(0.5);
+            transition: transform 0.4s ease;
+        }
+
+        .profile-banner:hover .banner-image {
+            transform: scale(1.02);
+        }
+
+        .banner-blur-left {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 150px;
+            height: 100%;
+            background: linear-gradient(to right, var(--bg-color), transparent);
+            pointer-events: none;
+        }
+
+        .banner-blur-right {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 150px;
+            height: 100%;
+            background: linear-gradient(to left, var(--bg-color), transparent);
+            pointer-events: none;
+        }
+
+        .banner-blur-top {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 80px;
+            background: linear-gradient(to bottom, var(--bg-color), transparent);
+            pointer-events: none;
+        }
+
+        .banner-blur-bottom {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 150px;
+            background: linear-gradient(to top, var(--bg-color), transparent);
+            pointer-events: none;
+        }
+
+        .banner-edit-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--card-border);
+            color: var(--text-main);
+            padding: 12px 24px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-family: 'Unbounded', sans-serif;
+            z-index: 5;
+        }
+
+        .banner-edit-btn:hover {
+            background: var(--accent-color);
+            color: #000;
+            border-color: var(--accent-color);
+        }
+
+        .profile-header {
+            display: flex;
+            align-items: flex-end;
+            gap: 30px;
+            margin-top: -100px;
+            margin-left: 50px;
+            position: relative;
+            z-index: 10;
+            margin-bottom: 50px;
+        }
+
+        .avatar-wrapper {
+            position: relative;
+        }
+
+        .profile-avatar {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            border: 6px solid var(--bg-color);
+            object-fit: cover;
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.5);
+            transition: transform 0.2s ease;
+        }
+
+        .profile-avatar:hover {
+            transform: scale(1.02);
+        }
+
+        .avatar-edit-btn {
+            position: absolute;
+            bottom: 15px;
+            right: 15px;
+            width: 45px;
+            height: 45px;
+            background: var(--accent-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            color: #000;
+            border: 4px solid var(--bg-color);
+            font-size: 1rem;
+        }
+
+        .avatar-edit-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .profile-details {
+            padding-bottom: 25px;
+        }
+
+        .profile-username {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            font-family: 'Unbounded', sans-serif;
+        }
+
+        .role-tag {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .role-tag.user {
+            background: linear-gradient(135deg, #4CAF50, #2E7D32);
+        }
+
+        .profile-email {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .profile-email i {
+            color: var(--accent-color);
+        }
+
+        .info-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 30px;
+        }
+
+        .info-row {
+            background: rgba(15, 15, 15, 0.6);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--card-border);
+            border-radius: 14px;
+            padding: 20px 28px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            transition: all 0.2s ease;
+        }
+
+        .info-row:hover {
+            transform: scale(1.005);
+            background: rgba(20, 20, 20, 0.8);
+            border-color: var(--accent-border);
+        }
+
+        .info-row-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--accent-bg);
+            border: 1px solid var(--accent-border);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent-color);
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        .info-row-content {
+            flex: 1;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .info-row-label {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .info-row-value {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-main);
+            font-family: 'Unbounded', sans-serif;
+        }
+
+        .info-row-value.active {
+            color: #4CAF50;
+        }
+
+        .info-row-value.expired {
+            color: #f44336;
+        }
+
+        .info-row-value.uid-value {
+            font-size: 0.85rem;
+            background: rgba(var(--accent-r), var(--accent-g), var(--accent-b), 0.1);
+            padding: 6px 14px;
+            border-radius: 8px;
+            border: 1px solid var(--accent-border);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .info-row-value.uid-value:hover {
+            background: rgba(var(--accent-r), var(--accent-g), var(--accent-b), 0.2);
+        }
+
+        .info-row-value.uid-value i {
+            font-size: 0.75rem;
+            opacity: 0.7;
+        }
+
+        .actions-folder {
+            background: rgba(15, 15, 15, 0.6);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--card-border);
+            border-radius: 18px;
+            overflow: hidden;
+            transition: all 0.2s ease;
+        }
+
+        .actions-folder:hover {
+            border-color: var(--accent-border);
+        }
+
+        .actions-folder-header {
+            padding: 22px 28px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .actions-folder-header:hover {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .actions-folder-title {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            font-family: 'Unbounded', sans-serif;
+        }
+
+        .actions-folder-title i {
+            color: var(--accent-color);
+        }
+
+        .actions-folder-arrow {
+            color: var(--text-muted);
+            font-size: 1rem;
+            transition: transform 0.3s ease;
+        }
+
+        .actions-folder.open .actions-folder-arrow {
+            transform: rotate(180deg);
+        }
+
+        .actions-folder-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .actions-folder.open .actions-folder-content {
+            max-height: 500px;
+        }
+
+        .actions-list {
+            padding: 0 15px 15px 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .action-item {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            padding: 18px 22px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            color: var(--text-main);
+        }
+
+        .action-item:hover {
+            transform: scale(1.008);
+            background: rgba(255, 255, 255, 0.04);
+            border-color: var(--accent-border);
+        }
+
+        .action-item.primary {
+            background: linear-gradient(135deg, var(--accent-color), #9060e0);
+            border: none;
+        }
+
+        .action-item.primary:hover {
+            transform: scale(1.01);
+            box-shadow: 0 10px 30px rgba(var(--accent-r), var(--accent-g), var(--accent-b), 0.25);
+        }
+
+        .action-item.primary .action-item-icon {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.3);
+            color: #fff;
+        }
+
+        .action-item.admin {
+            border-color: rgba(255, 107, 107, 0.3);
+        }
+
+        .action-item.admin:hover {
+            background: rgba(255, 107, 107, 0.08);
+            border-color: rgba(255, 107, 107, 0.5);
+        }
+
+        .action-item.admin .action-item-icon {
+            background: rgba(255, 107, 107, 0.12);
+            border-color: rgba(255, 107, 107, 0.3);
+            color: #ff6b6b;
+        }
+
+        .action-item-icon {
+            width: 42px;
+            height: 42px;
+            background: var(--accent-bg);
+            border: 1px solid var(--accent-border);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            color: var(--accent-color);
+            flex-shrink: 0;
+        }
+
+        .action-item-text {
+            flex: 1;
+            font-size: 0.95rem;
+            font-weight: 500;
+            font-family: 'Unbounded', sans-serif;
+        }
+
+        .action-item-arrow {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .action-item:hover .action-item-arrow {
+            color: var(--accent-color);
+        }
+
+        .action-item.primary .action-item-arrow {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .header-logout-btn {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 20px;
+            background: rgba(244, 67, 54, 0.1);
+            border: 1px solid rgba(244, 67, 54, 0.3);
+            border-radius: 10px;
+            color: #f44336;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-family: 'Unbounded', sans-serif;
+            text-decoration: none;
+        }
+
+        .header-logout-btn:hover {
+            background: rgba(244, 67, 54, 0.15);
+            border-color: rgba(244, 67, 54, 0.5);
+        }
+
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .dashboard-modal {
+            background: rgba(15, 15, 15, 0.85);
+            backdrop-filter: blur(40px);
+            -webkit-backdrop-filter: blur(40px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 40px;
+            width: 100%;
+            max-width: 480px;
+            transform: scale(0.95) translateY(20px);
+            transition: transform 0.3s ease;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.3), 
+                        0 0 0 1px rgba(255, 255, 255, 0.05) inset;
+        }
+
+        .modal-overlay.active .dashboard-modal {
+            transform: scale(1) translateY(0);
+        }
+
+        .modal-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .modal-head h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .modal-head h2 i {
+            color: var(--accent-color);
+        }
+
+        .close-modal {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: var(--text-muted);
+            transition: all 0.2s ease;
+        }
+
+        .close-modal:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-main);
+        }
+
+        .input-group {
+            margin-bottom: 25px;
+        }
+
+        .input-label {
+            display: block;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: 10px;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 16px 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--card-border);
+            border-radius: 14px;
+            color: var(--text-main);
+            font-size: 1rem;
+            transition: all 0.2s ease;
+            outline: none;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .input-field::placeholder {
+            color: var(--text-muted);
+        }
+
+        .input-field:focus {
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 4px rgba(var(--accent-r), var(--accent-g), var(--accent-b), 0.15);
+        }
+
+        .ram-control {
+            margin: 30px 0;
+        }
+
+        .ram-slider {
+            width: 100%;
+            height: 10px;
+            background: var(--card-border);
+            border-radius: 20px;
+            outline: none;
+            -webkit-appearance: none;
+            cursor: pointer;
+        }
+
+        .ram-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 28px;
+            height: 28px;
+            background: var(--accent-color);
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 0 20px rgba(var(--accent-r), var(--accent-g), var(--accent-b), 0.6);
+        }
+
+        .ram-display {
+            text-align: center;
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--accent-color);
+            margin: 25px 0;
+            font-family: 'Unbounded', sans-serif;
+        }
+
+        .ram-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .ram-btn {
+            padding: 12px 22px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            font-family: 'Unbounded', sans-serif;
+        }
+
+        .ram-btn:hover, .ram-btn.selected {
+            background: var(--accent-bg);
+            border-color: var(--accent-color);
+            color: var(--accent-color);
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 16px;
+            background: var(--accent-color);
+            color: #000;
+            border: none;
+            border-radius: 14px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-family: 'Unbounded', sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .submit-btn:hover {
+            background: var(--accent-hover);
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .token-box {
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid var(--card-border);
+            border-radius: 14px;
+            padding: 20px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85rem;
+            word-break: break-all;
+            color: var(--text-muted);
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+
+        .modal-message {
+            padding: 12px 16px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+            display: none;
+        }
+
+        .modal-message.error {
+            display: block;
+            background: rgba(244, 67, 54, 0.1);
+            border: 1px solid rgba(244, 67, 54, 0.3);
+            color: #f44336;
+        }
+
+        .modal-message.success {
+            display: block;
+            background: rgba(76, 175, 80, 0.1);
+            border: 1px solid rgba(76, 175, 80, 0.3);
+            color: #4CAF50;
+        }
+
+        .notification {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: rgba(20, 20, 20, 0.95);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 18px 28px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            transform: translateX(150%);
+            transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            z-index: 2000;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .notification.visible {
+            transform: translateX(0);
+        }
+
+        .notification.success {
+            border-color: #4CAF50;
+        }
+
+        .notification.success i {
+            color: #4CAF50;
+        }
+
+        .notification.error {
+            border-color: #f44336;
+        }
+
+        .notification.error i {
+            color: #f44336;
+        }
+
+        .notification i {
+            font-size: 1.3rem;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 50px;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+            background: rgba(5, 5, 5, 0.5);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-family: 'Unbounded', sans-serif;
+            font-weight: 600;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+            text-decoration: none;
+            color: var(--text-main);
+        }
+
+        .logo:hover {
+            transform: scale(1.02);
+        }
+
+        .logo-icon {
+            width: 32px;
+            height: 32px;
+            object-fit: contain;
+            transition: transform 0.2s ease;
+            border-radius: 8px;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 5px 0;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--text-main);
+        }
+
+        .lang-switcher {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--card-border);
+            border-radius: 8px;
+            padding: 5px;
+        }
+
+        .lang-btn {
+            padding: 6px 12px;
+            border: none;
+            background: transparent;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            cursor: pointer;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+            font-weight: 500;
+        }
+
+        .lang-btn:hover {
+            color: var(--text-main);
+        }
+
+        .lang-btn.active {
+            background: var(--accent-color);
+            color: #000;
+        }
+
+        .floating-download-btn {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, var(--accent-color), var(--accent-color));
+            color: #000;
+            padding: 16px 32px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            font-family: 'Unbounded', sans-serif;
+            font-weight: 600;
+            font-size: 0.95rem;
+            box-shadow: 0 10px 40px rgba(var(--accent-r), var(--accent-g), var(--accent-b), 0.4),
+                        0 0 0 1px rgba(255, 255, 255, 0.1) inset;
+            z-index: 90;
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .floating-download-btn.hidden {
+            opacity: 0;
+            visibility: hidden;
+            transform: translateX(-50%) translateY(30px);
+            pointer-events: none;
+        }
+
+        .floating-download-btn i {
+            font-size: 1.1rem;
+        }
+
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.3s ease;
+        }
+
+        .loading-overlay.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 3px solid var(--card-border);
+            border-top-color: var(--accent-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes pulse-ring {
+            0% {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 0.6;
+            }
+            100% {
+                transform: translate(-50%, -50%) scale(1.3);
+                opacity: 0;
+            }
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                padding: 15px 20px;
+            }
+            .nav-links {
+                display: none;
+            }
+            .dashboard-section {
+                padding-top: 100px;
+            }
+            .profile-banner {
+                height: 200px;
+            }
+            .profile-header {
+                flex-direction: column;
+                align-items: center;
+                margin-left: 0;
+                text-align: center;
+                margin-top: -80px;
+            }
+            .profile-avatar {
+                width: 140px;
+                height: 140px;
+            }
+            .profile-username {
+                flex-direction: column;
+                font-size: 1.8rem;
+                gap: 12px;
+            }
+            .info-row-content {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 5px;
+            }
+            .dashboard-modal {
+                margin: 20px;
+                padding: 30px;
+            }
+            .floating-download-btn {
+                padding: 14px 24px;
+                font-size: 0.85rem;
+                bottom: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="loading-overlay" id="loadingOverlay">
+    <div class="loading-spinner"></div>
+</div>
+
+<div class="bg-gradient-1"></div>
+<div class="bg-gradient-2"></div>
+<div class="bg-gradient-3"></div>
+
+<div id="header-container-cabinet"></div>
+
+<script src="../js/header.js"></script>
+
+<section class="dashboard-section">
+    <div class="section-container">
+        <div class="profile-banner">
+            <img src="../config/baner.png" alt="Banner" class="banner-image" id="bannerImg">
+            <div class="banner-blur-left"></div>
+            <div class="banner-blur-right"></div>
+            <div class="banner-blur-top"></div>
+            <div class="banner-blur-bottom"></div>
+            <input type="file" id="bannerFile" accept="image/*" hidden>
+        </div>
+
+        <div class="profile-header">
+            <div class="avatar-wrapper">
+                <img src="../config/ava.png" alt="Avatar" class="profile-avatar" id="avatarImg">
+                <input type="file" id="avatarFile" accept="image/*" hidden>
+            </div>
+            <div class="profile-details">
+                <h1 class="profile-username">
+                    <span id="usernameDisplay">Загрузка...</span>
+                </h1>
+                <p class="profile-email">
+                    <i class="fa-solid fa-envelope"></i>
+                    <span id="emailDisplay">loading@example.com</span>
+                </p>
+            </div>
+        </div>
+
+        <div class="info-list">
+
+            <div class="info-row">
+                <div class="info-row-icon"><i class="fa-solid fa-user"></i></div>
+                <div class="info-row-content">
+                    <span class="info-row-label" data-lang="label_login">Логин</span>
+                    <span class="info-row-value uid-value" id="loginDisplay">—</span>
+                </div>
+            </div>
+            <div class="info-row">
+                <div class="info-row-icon"><i class="fa-solid fa-at"></i></div>
+                <div class="info-row-content">
+                    <span class="info-row-label">E-mail</span>
+                    <span class="info-row-value uid-value" id="emailInfoDisplay">—</span>
+                </div>
+            </div>
+            <div class="info-row">
+                <div class="info-row-icon"><i class="fa-solid fa-shield-halved"></i></div>
+                <div class="info-row-content">
+                    <span class="info-row-label" data-lang="label_role">Роль</span>
+                    <span class="info-row-value uid-value" id="roleDisplay">—</span>
+                </div>
+            </div>
+            <div class="info-row">
+                <div class="info-row-icon"><i class="fa-solid fa-user-plus"></i></div>
+                <div class="info-row-content">
+                    <span class="info-row-label" data-lang="label_registered">Дата регистрации</span>
+                    <span class="info-row-value uid-value" id="regDateDisplay">—</span>
+                </div>
+            </div>
+            <div class="info-row" id="subStartRow" style="display: none;">
+                <div class="info-row-icon"><i class="fa-solid fa-calendar-check"></i></div>
+                <div class="info-row-content">
+                    <span class="info-row-label" data-lang="label_sub_start">Дата выдачи подписки</span>
+                    <span class="info-row-value uid-value" id="subStartDisplay">—</span>
+                </div>
+            </div>
+            <div class="info-row" id="subEndRow" style="display: none;">
+                <div class="info-row-icon"><i class="fa-solid fa-calendar-xmark"></i></div>
+                <div class="info-row-content">
+                    <span class="info-row-label" data-lang="label_sub_end">Подписка до</span>
+                    <span class="info-row-value uid-value" id="subEndDisplay">—</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="actions-folder open" id="actionsFolder">
+            <div class="actions-folder-header" onclick="toggleActionsFolder()">
+                <div class="actions-folder-title">
+                    <i class="fa-solid fa-folder"></i>
+                    <span data-lang="actions_title">Действия</span>
+                </div>
+                <i class="fa-solid fa-chevron-down actions-folder-arrow"></i>
+            </div>
+            <div class="actions-folder-content">
+                <div class="actions-list">
+                    <div class="action-item" id="downloadAction" style="display: none;" onclick="downloadClient()">
+                        <div class="action-item-icon"><i class="fa-solid fa-download"></i></div>
+                        <span class="action-item-text" data-lang="action_download">Скачать клиент</span>
+                        <i class="fa-solid fa-chevron-right action-item-arrow"></i>
+                    </div>
+                    <div class="action-item" onclick="openDashboardModal('keyModal')">
+                        <div class="action-item-icon"><i class="fa-solid fa-key"></i></div>
+                        <span class="action-item-text" data-lang="action_key">Активировать ключ</span>
+                        <i class="fa-solid fa-chevron-right action-item-arrow"></i>
+                    </div>
+                    <div class="action-item admin" id="adminAction" style="display: none;">
+                        <div class="action-item-icon"><i class="fa-solid fa-gear"></i></div>
+                        <span class="action-item-text">Admin Panel</span>
+                        <i class="fa-solid fa-chevron-right action-item-arrow"></i>
+                    </div>
+                    <div class="action-item" id="tokenAction" style="display: none;" onclick="openDashboardModal('tokenModal')">
+                        <div class="action-item-icon"><i class="fa-solid fa-copy"></i></div>
+                        <span class="action-item-text" data-lang="action_token">Скопировать токен</span>
+                        <i class="fa-solid fa-chevron-right action-item-arrow"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="floating-download-btn hidden" id="floatingDownloadBtn" onclick="scrollToActionsAndOpen()">
+    <div class="pulse-ring"></div>
+    <i class="fa-solid fa-download"></i>
+    <span data-lang="action_download">Скачать клиент</span>
+</div>
+
+<div id="footer-container"></div>
+<script src="../js/footer.js"></script>
+
+<div class="modal-overlay" id="ramModal" onclick="closeDashboardModal('ramModal', event)">
+    <div class="dashboard-modal" onclick="event.stopPropagation()">
+        <div class="modal-head">
+            <h2><i class="fa-solid fa-memory"></i> <span data-lang="modal_ram_title">Изменить RAM</span></h2>
+            <button class="close-modal" onclick="closeDashboardModal('ramModal')"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div class="input-group">
+            <label class="input-label">Введите значение RAM (512-16384 MB)</label>
+            <input type="number" class="input-field" id="ramInput" placeholder="4096" min="512" max="16384" step="256">
+        </div>
+        <div class="ram-control">
+            <input type="range" class="ram-slider" min="512" max="16384" value="4096" step="256" id="ramSlider" oninput="updateRam(this.value)">
+        </div>
+        <div class="ram-display" id="ramDisplay">4 GB</div>
+        <div class="ram-buttons">
+            <button class="ram-btn" onclick="selectRam(2048)">2 GB</button>
+            <button class="ram-btn selected" onclick="selectRam(4096)">4 GB</button>
+            <button class="ram-btn" onclick="selectRam(6144)">6 GB</button>
+            <button class="ram-btn" onclick="selectRam(8192)">8 GB</button>
+            <button class="ram-btn" onclick="selectRam(12288)">12 GB</button>
+            <button class="ram-btn" onclick="selectRam(16384)">16 GB</button>
+        </div>
+        <div class="modal-message" id="ramMessage"></div>
+        <button class="submit-btn" style="margin-top: 30px;" id="ramSubmitBtn" onclick="saveRamSettings()">
+            <i class="fa-solid fa-check"></i>
+            <span data-lang="btn_save">Сохранить</span>
+        </button>
+    </div>
+</div>
+
+<div class="modal-overlay" id="keyModal" onclick="closeDashboardModal('keyModal', event)">
+    <div class="dashboard-modal" onclick="event.stopPropagation()">
+        <div class="modal-head">
+            <h2><i class="fa-solid fa-key"></i> <span data-lang="modal_key_title">Активировать ключ</span></h2>
+            <button class="close-modal" onclick="closeDashboardModal('keyModal')"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div class="input-group">
+            <label class="input-label" data-lang="key_label">Введите ключ активации</label>
+            <input type="text" class="input-field" id="keyInput" placeholder="XXXX-XXXX-XXXX-XXXX">
+        </div>
+        <div class="modal-message" id="keyMessage"></div>
+        <button class="submit-btn" id="keySubmitBtn" onclick="activateSubscriptionKey()">
+            <i class="fa-solid fa-unlock"></i>
+            <span data-lang="btn_activate">Активировать</span>
+        </button>
+    </div>
+</div>
+
+<div class="modal-overlay" id="tokenModal" onclick="closeDashboardModal('tokenModal', event)">
+    <div class="dashboard-modal" onclick="event.stopPropagation()">
+        <div class="modal-head">
+            <h2><i class="fa-solid fa-fingerprint"></i> <span data-lang="modal_token_title">Ваш токен</span></h2>
+            <button class="close-modal" onclick="closeDashboardModal('tokenModal')"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div class="token-box" id="tokenBox"></div>
+        <button class="submit-btn" onclick="copyUserToken()">
+            <i class="fa-solid fa-copy"></i>
+            <span data-lang="btn_copy">Скопировать</span>
+        </button>
+    </div>
+</div>
+
+<div class="notification" id="notification">
+    <i class="fa-solid fa-check-circle"></i>
+    <span id="notificationText">Успешно!</span>
+</div>
+
+<script>
+    const API_URL = CONFIG.clientLinkUrl;
+    let userData = {
+        username: '',
+        email: '',
+        role: '',
+        uid: '',
+        regDate: '',
+        entDate: '',
+        outDate: ''
+    };
+    let hasSubscription = false;
+    let isAdmin = false;
+
+    const translations = {
+        en: {
+            nav_home: "Home", nav_products: "Products", nav_privacy: "Privacy", nav_terms: "Terms",
+            edit_banner: "Change Banner",
+            label_login: "Login", label_role: "Role", label_registered: "Registration Date",
+            label_sub_start: "Subscription Issued", label_sub_end: "Subscription Until",
+            actions_title: "Actions",
+            action_download: "Download Client", action_ram: "Change RAM",
+            action_key: "Activate Key", action_token: "Copy Token", action_logout: "Logout",
+            modal_ram_title: "Change RAM", modal_key_title: "Activate Key", modal_token_title: "Your Token",
+            key_label: "Enter activation key",
+            btn_save: "Save", btn_activate: "Activate", btn_copy: "Copy",
+            toast_ram_saved: "RAM changed to", toast_key_activated: "Key successfully activated!",
+            toast_key_error: "Enter activation key", toast_key_invalid: "Key does not exist or has expired",
+            toast_token_copied: "Token copied to clipboard",
+            toast_download: "Download started...", toast_logout: "Are you sure you want to logout?",
+            toast_avatar: "Avatar updated", toast_banner: "Banner updated",
+            toast_uid_copied: "UID copied to clipboard",
+            toast_auth_required: "Authorization required",
+            toast_ram_error: "Error saving RAM settings",
+            footer_description: "The ultimate gaming enhancement solution.",
+            footer_navigation: "Navigation", footer_support: "Support",
+            footer_download: "Download", footer_faq: "EULA", footer_contact: "Contact Us",
+            footer_rights: "All rights reserved."
+        },
+        ru: {
+            nav_home: "Главная", nav_products: "Продукты", nav_privacy: "Приватность", nav_terms: "Условия",
+            edit_banner: "Изменить баннер",
+            label_login: "Логин", label_role: "Роль", label_registered: "Дата регистрации",
+            label_sub_start: "Дата выдачи подписки", label_sub_end: "Подписка до",
+            actions_title: "Действия",
+            action_download: "Скачать клиент", action_ram: "Изменить RAM",
+            action_key: "Активировать ключ", action_token: "Скопировать токен", action_logout: "Выйти",
+            modal_ram_title: "Изменить RAM", modal_key_title: "Активировать ключ", modal_token_title: "Ваш токен",
+            key_label: "Введите ключ активации",
+            btn_save: "Сохранить", btn_activate: "Активировать", btn_copy: "Скопировать",
+            toast_ram_saved: "RAM изменён на", toast_key_activated: "Ключ успешно активирован!",
+            toast_key_error: "Введите ключ активации", toast_key_invalid: "Ключа не существует или он истёк",
+            toast_token_copied: "Токен скопирован в буфер обмена",
+            toast_download: "Загрузка началась...", toast_logout: "Вы уверены, что хотите выйти?",
+            toast_avatar: "Аватар обновлён", toast_banner: "Баннер обновлён",
+            toast_uid_copied: "UID скопирован в буфер обмена",
+            toast_auth_required: "Необходима авторизация",
+            toast_ram_error: "Ошибка сохранения настроек RAM",
+            footer_description: "Лучшее решение для улучшения игры.",
+            footer_navigation: "Навигация", footer_support: "Поддержка",
+            footer_download: "Скачать", footer_faq: "EULA", footer_contact: "Связаться",
+            footer_rights: "Все права защищены."
+        }
+    };
+
+    let currentLang = localStorage.getItem('lang') || 'en';
+
+    function formatDate(dateString) {
+        const date = new Date(dateString);
+        return date.toLocaleString('ru-RU', {
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit'
+        }).replace(',', '');
+    }
+
+    async function fetchUserData() {
+        try {
+            const token = localStorage.getItem('token');
+            if (!token) {
+                window.location.href = '../login';
+                return;
+            }
+
+            const profileResponse = await fetch(`${API_URL}/user/profile`, {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            if (!profileResponse.ok) {
+                localStorage.removeItem('token');
+                localStorage.removeItem('user');
+                window.location.href = '../index.html';
+                return;
+            }
+
+            const profileData = await profileResponse.json();
+
+            const userRole = profileData.role.toUpperCase();
+            isAdmin = (userRole === 'ADMIN' || userRole === 'OWNER' || userRole === 'MODER');
+
+            const subResponse = await fetch(`${API_URL}/user/sub`, {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            });
+
+            console.log('Sub Response Status:', subResponse.ok);
+            console.log('Sub Response Code:', subResponse.status);
+
+            let entDate = '';
+            let outDate = '';
+
+            if (subResponse.ok) {
+                const subJson = await subResponse.json();
+                console.log('Sub JSON:', subJson);
+                console.log('Sub data:', subJson.sub);
+
+                if (subJson.sub) {
+                    console.log('Has subscription!');
+                    entDate = formatDate(subJson.sub.entDate);
+                    outDate = formatDate(subJson.sub.outDate);
+                    hasSubscription = true;
+                    console.log('hasSubscription set to:', hasSubscription);
+                } else {
+                    console.log('No subscription');
+                    hasSubscription = false;
+                }
+            }
+
+            userData = {
+                username: profileData.username,
+                email: profileData.email,
+                role: profileData.role,
+                uid: profileData.uid || '',
+                regDate: formatDate(profileData.regDate),
+                entDate: entDate,
+                outDate: outDate
+            };
+
+            console.log('Final hasSubscription value:', hasSubscription);
+
+            updateUI();
+            document.getElementById('loadingOverlay').classList.add('hidden');
+
+        } catch (err) {
+            console.error('Error fetching user data:', err);
+            document.getElementById('loadingOverlay').classList.add('hidden');
+        }
+    }
+
+   function updateUI() {
+console.log('UpdateUI called - hasSubscription:', hasSubscription);
+
+document.getElementById('usernameDisplay').textContent = userData.username;
+document.getElementById('emailDisplay').textContent = userData.email;
+document.getElementById('loginDisplay').textContent = userData.username;
+document.getElementById('emailInfoDisplay').textContent = userData.email;
+document.getElementById('roleDisplay').textContent = userData.role;
+document.getElementById('regDateDisplay').textContent = userData.regDate;
+
+if (userData.entDate) {
+    document.getElementById('subStartRow').style.display = 'flex';
+    document.getElementById('subStartDisplay').textContent = userData.entDate;
+}
+
+if (userData.outDate) {
+    document.getElementById('subEndRow').style.display = 'flex';
+    document.getElementById('subEndDisplay').textContent = userData.outDate;
+}
+
+if (hasSubscription) {
+    console.log('Showing download button');
+    document.getElementById('downloadAction').style.display = 'flex';
+    document.getElementById('floatingDownloadBtn').classList.remove('hidden');
+} else {
+    console.log('Hiding download button');
+}
+
+if (isAdmin) {
+    document.getElementById('adminAction').style.display = 'flex';
+    document.getElementById('tokenAction').style.display = 'flex';
+    
+    // Получить динамический путь админки
+    const token = localStorage.getItem('token');
+    fetch(`${API_URL}/admin/path`, {
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.path) {
+            const adminBtn = document.getElementById('adminAction');
+            adminBtn.onclick = () => window.location.href = `/${data.path}`;
+        }
+    })
+    .catch(err => console.error('Failed to get admin path:', err));
+}
+
+const token = localStorage.getItem('token');
+if (token) {
+    const tokenBox = document.getElementById('tokenBox');
+    if (tokenBox) {
+        tokenBox.textContent = token;
+    }
+}
+}
+    function handleLogout() {
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
+        window.location.href = '../index.html';
+    }
+
+    function downloadClient() {
+        const fileUrl = `../files/loader.png`;
+        const link = document.createElement('a');
+        link.href = fileUrl;
+        link.download = 'loader.png';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        showNotification(translations[currentLang].toast_download);
+    }
+
+    function setLanguage(lang) {
+        currentLang = lang;
+        document.querySelectorAll('.lang-btn').forEach(btn => {
+            btn.classList.toggle('active', btn.textContent === lang.toUpperCase());
+        });
+        document.querySelectorAll('[data-lang]').forEach(el => {
+            const key = el.getAttribute('data-lang');
+            if (translations[lang][key]) el.textContent = translations[lang][key];
+        });
+        document.documentElement.lang = lang;
+        localStorage.setItem('lang', lang);
+    }
+
+    function hexToRgb(hex) {
+        const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+        return result ? { r: parseInt(result[1], 16), g: parseInt(result[2], 16), b: parseInt(result[3], 16) } : { r: 181, g: 125, b: 255 };
+    }
+
+    function adjustColor(hex, amount) {
+        const rgb = hexToRgb(hex);
+        const adjust = (val) => Math.max(0, Math.min(255, val + amount));
+        const toHex = (val) => val.toString(16).padStart(2, '0');
+        return `#${toHex(adjust(rgb.r))}${toHex(adjust(rgb.g))}${toHex(adjust(rgb.b))}`;
+    }
+
+    function applyConfig() {
+        if (typeof CONFIG !== 'undefined') {
+            document.querySelectorAll('.client-name').forEach(el => el.textContent = CONFIG.clientName);
+            document.title = CONFIG.clientName + " - Dashboard";
+            const root = document.documentElement;
+            const rgb = hexToRgb(CONFIG.accentColor);
+            root.style.setProperty('--accent-color', CONFIG.accentColor);
+            root.style.setProperty('--accent-hover', adjustColor(CONFIG.accentColor, -20));
+            root.style.setProperty('--accent-r', rgb.r);
+            root.style.setProperty('--accent-g', rgb.g);
+            root.style.setProperty('--accent-b', rgb.b);
+        }
+        setLanguage(currentLang);
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        applyConfig();
+        fetchUserData();
+        setTimeout(updateFloatingButtonVisibility, 100);
+    });
+
+    function toggleActionsFolder() {
+        document.getElementById('actionsFolder').classList.toggle('open');
+    }
+
+    function openDashboardModal(id) {
+        document.getElementById(id).classList.add('active');
+        document.body.style.overflow = 'hidden';
+
+        if (id === 'ramModal') {
+            document.getElementById('ramMessage').className = 'modal-message';
+            document.getElementById('ramMessage').textContent = '';
+        }
+        if (id === 'keyModal') {
+            document.getElementById('keyInput').value = '';
+            document.getElementById('keyMessage').className = 'modal-message';
+            document.getElementById('keyMessage').textContent = '';
+        }
+    }
+
+    function closeDashboardModal(id, e) {
+        if (e && e.target !== e.currentTarget) return;
+        document.getElementById(id).classList.remove('active');
+        document.body.style.overflow = '';
+    }
+
+    function showNotification(message, type = 'success') {
+        const notification = document.getElementById('notification');
+        const text = document.getElementById('notificationText');
+        notification.className = 'notification ' + type;
+        text.textContent = message;
+        notification.querySelector('i').className = type === 'success' ? 'fa-solid fa-check-circle' : 'fa-solid fa-times-circle';
+        notification.classList.add('visible');
+        setTimeout(() => notification.classList.remove('visible'), 3500);
+    }
+
+    function updateRam(value) {
+        const gb = (value / 1024).toFixed(1).replace('.0', '');
+        document.getElementById('ramDisplay').textContent = gb + ' GB';
+        document.getElementById('ramInput').value = value;
+        document.querySelectorAll('.ram-btn').forEach(btn => {
+            const btnValue = parseInt(btn.onclick.toString().match(/\d+/)[0]);
+            btn.classList.toggle('selected', btnValue === parseInt(value));
+        });
+    }
+
+    function selectRam(value) {
+        document.getElementById('ramSlider').value = value;
+        updateRam(value);
+    }
+
+    async function saveRamSettings() {
+        const ramMessage = document.getElementById('ramMessage');
+        const submitBtn = document.getElementById('ramSubmitBtn');
+
+        ramMessage.className = 'modal-message';
+        ramMessage.textContent = '';
+
+        const ramValue = document.getElementById('ramSlider').value;
+        const ram = parseInt(ramValue);
+
+        if (!ramValue || isNaN(ram) || ram < 512 || ram > 16384) {
+            ramMessage.className = 'modal-message error';
+            ramMessage.textContent = 'Введите корректное значение (512-16384 MB)';
+            return;
+        }
+
+        submitBtn.disabled = true;
+
+        try {
+            const token = localStorage.getItem('token');
+
+            const response = await fetch(`${API_URL}/settings/ram`, {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ ramAmount: ram })
+            });
+
+            if (response.ok) {
+                const gb = (ram / 1024).toFixed(1).replace('.0', '');
+                ramMessage.className = 'modal-message success';
+                ramMessage.textContent = translations[currentLang].toast_ram_saved + ' ' + gb + ' GB';
+
+                setTimeout(() => {
+                    closeDashboardModal('ramModal');
+                }, 1500);
+            } else {
+                ramMessage.className = 'modal-message error';
+                ramMessage.textContent = translations[currentLang].toast_ram_error;
+            }
+        } catch (err) {
+            ramMessage.className = 'modal-message error';
+            ramMessage.textContent = translations[currentLang].toast_ram_error;
+        } finally {
+            submitBtn.disabled = false;
+        }
+    }
+
+    async function activateSubscriptionKey() {
+        const keyInput = document.getElementById('keyInput');
+        const keyMessage = document.getElementById('keyMessage');
+        const submitBtn = document.getElementById('keySubmitBtn');
+
+        keyMessage.className = 'modal-message';
+        keyMessage.textContent = '';
+
+        const keyValue = keyInput.value.trim();
+
+        if (!keyValue || keyValue.length === 0) {
+            keyMessage.className = 'modal-message error';
+            keyMessage.textContent = translations[currentLang].toast_key_error;
+            return;
+        }
+
+        submitBtn.disabled = true;
+
+        try {
+            const token = localStorage.getItem('token');
+
+            const response = await fetch(`${API_URL}/keys/activate`, {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ key: keyValue })
+            });
+
+            if (response.ok) {
+                keyMessage.className = 'modal-message success';
+                keyMessage.textContent = translations[currentLang].toast_key_activated;
+
+                setTimeout(() => {
+                    closeDashboardModal('keyModal');
+                    window.location.reload();
+                }, 1500);
+            } else {
+                const error = await response.json();
+                keyMessage.className = 'modal-message error';
+                keyMessage.textContent = error.message || translations[currentLang].toast_key_invalid;
+            }
+        } catch (err) {
+            keyMessage.className = 'modal-message error';
+            keyMessage.textContent = 'Ошибка при активации ключа';
+        } finally {
+            submitBtn.disabled = false;
+        }
+    }
+
+    function copyUserToken() {
+        const token = document.getElementById('tokenBox').textContent;
+        navigator.clipboard.writeText(token).then(() => {
+            closeDashboardModal('tokenModal');
+            showNotification(translations[currentLang].toast_token_copied);
+        });
+    }
+
+    function scrollToActionsAndOpen() {
+        const actionsFolder = document.getElementById('actionsFolder');
+        actionsFolder.scrollIntoView({
+            behavior: 'smooth',
+            block: 'center'
+        });
+        setTimeout(() => {
+            if (!actionsFolder.classList.contains('open')) {
+                toggleActionsFolder();
+            }
+        }, 600);
+    }
+
+    function updateFloatingButtonVisibility() {
+        const floatingBtn = document.getElementById('floatingDownloadBtn');
+        const actionsFolder = document.getElementById('actionsFolder');
+
+        if (!actionsFolder || !floatingBtn || !hasSubscription) return;
+
+        const actionsFolderRect = actionsFolder.getBoundingClientRect();
+        const windowHeight = window.innerHeight;
+
+        if (actionsFolderRect.top > windowHeight - 100) {
+            floatingBtn.classList.remove('hidden');
+        } else {
+            floatingBtn.classList.add('hidden');
+        }
+    }
+
+    window.addEventListener('scroll', updateFloatingButtonVisibility);
+    window.addEventListener('resize', updateFloatingButtonVisibility);
+
+    document.getElementById('avatarFile').addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                document.getElementById('avatarImg').src = event.target.result;
+                showNotification(translations[currentLang].toast_avatar);
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+
+    document.getElementById('bannerFile').addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                document.getElementById('bannerImg').src = event.target.result;
+                showNotification(translations[currentLang].toast_banner);
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            document.querySelectorAll('.modal-overlay.active').forEach(modal => {
+                modal.classList.remove('active');
+            });
+            document.body.style.overflow = '';
+        }
+    });
+
+    document.getElementById('ramInput').addEventListener('input', function(e) {
+        const value = parseInt(e.target.value);
+        if (value >= 512 && value <= 16384) {
+            document.getElementById('ramSlider').value = value;
+            updateRam(value);
+        }
+    });
+</script>
+
+</body>
+</html>

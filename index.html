@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/x-icon" href="client.png">
+    <link rel="stylesheet" href="assets/css/main.css">
+    <script src="config/config.js"></script>
+    <style>
+        .form-message {
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            font-size: 14px;
+            display: none;
+        }
+        .form-message.error {
+            background: rgba(255, 59, 48, 0.15);
+            border: 1px solid rgba(255, 59, 48, 0.3);
+            color: #ff3b30;
+            display: block;
+        }
+        .form-message.success {
+            background: rgba(52, 199, 89, 0.15);
+            border: 1px solid rgba(52, 199, 89, 0.3);
+            color: #34c759;
+            display: block;
+        }
+        .btn-modal:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+
+<div class="bg-gradient-1"></div>
+<div class="bg-gradient-2"></div>
+<div class="bg-gradient-3"></div>
+<div id="header-container"></div>
+
+<script src="js/header.js"></script>
+
+<section class="hero">
+    <div class="badge">
+        <i class="fa-solid fa-trophy"></i> <span data-lang="badge_hero">Premium Experience!</span>
+    </div>
+    <h1 data-lang="hero_title">We give strength</h1>
+    <p class="subtitle" data-lang="hero_subtitle">
+        Discover a revolutionary experience with stunning visual design, smart bypasses and cutting-edge features that unlock new dimensions of gameplay.
+    </p>
+    <div class="hero-btns">
+        <a href="#" class="btn btn-primary" onclick="openModal('signin'); return false;" data-lang="btn_getstarted">Get Started</a>
+        <a href="#" class="btn btn-ghost" onclick="openModal('signup'); return false;"><i class="fa-regular fa-paper-plane"></i> <span data-lang="btn_contact">Register</span></a>
+    </div>
+</section>
+
+<div class="section-container">
+    <div class="section-header">
+        <div class="badge" style="background: #111; border-color: #333; color: #fff;">
+            <i class="fa-solid fa-star"></i> <span data-lang="badge_features">Features</span>
+        </div>
+        <h2 data-lang="section_title">Explore More!</h2>
+        <p data-lang="section_subtitle">Our software delivers powerful and intuitive tools to elevate your experience.</p>
+    </div>
+
+    <div class="bento-grid">
+        <div class="card">
+            <div class="chat-layout">
+                <div class="chat-message" style="margin-left: 40px;">
+                    <div class="user-icon"><i class="fa-solid fa-headset"></i></div>
+                    <div class="msg-content">
+                        <h4 data-lang="chat_assistant">Assistant</h4>
+                        <p data-lang="chat_msg1">Absolutely! What can I do for you?</p>
+                    </div>
+                </div>
+                <div class="chat-message">
+                    <div class="user-icon support"><i class="fa-solid fa-user"></i></div>
+                    <div class="msg-content">
+                        <h4 data-lang="chat_player">Player</h4>
+                        <p data-lang="chat_msg2">Hello! I need assistance with configuration.</p>
+                    </div>
+                </div>
+                <div class="chat-message" style="margin-left: 40px;">
+                    <div class="user-icon"><i class="fa-solid fa-paper-plane"></i></div>
+                    <div class="msg-content">
+                        <h4 data-lang="chat_assistant">Assistant</h4>
+                        <p data-lang="chat_msg3">No problem! Check your DMs for the guide.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="divider"></div>
+            
+            <div class="info-section">
+                <div class="info-block">
+                    <h4><i class="fa-solid fa-life-ring"></i> <span data-lang="info_support_title">Round-the-Clock Assistance</span></h4>
+                    <p data-lang="info_support_text">Got questions? Our dedicated team is available anytime to guide you — from initial setup to latest patches. Stuck somewhere? Just reach out!</p>
+                </div>
+                
+                <div class="info-block">
+                    <h4><i class="fa-solid fa-rocket"></i> <span data-lang="info_stability_title">Rock-Solid Performance</span></h4>
+                    <p><span class="client-name"></span> <span data-lang="info_stability_text">has maintained flawless operation for years. Our developers continuously optimize and push updates to guarantee seamless functionality across all versions.</span></p>
+                    
+                    <div class="stats-row">
+                        <div class="stat-item">
+                            <i class="fa-solid fa-clock"></i>
+                            <span><strong>99.9%</strong> <span data-lang="stat_uptime">Uptime</span></span>
+                        </div>
+                        <div class="stat-item">
+                            <i class="fa-solid fa-calendar-check"></i>
+                            <span><strong>3+</strong> <span data-lang="stat_years">Years Running</span></span>
+                        </div>
+                        <div class="stat-item">
+                            <i class="fa-solid fa-users"></i>
+                            <span><strong id="userCount">0</strong> <span data-lang="stat_users">Members</span></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+      <div class="card modules-card">
+    <img src="config/image/screen1.png" alt="Photo" style="width: 100%; height: 100%; object-fit: cover; border-radius: 12px;">
+</div>
+            </div>
+
+            <div class="modules-list">
+                <div class="module-item">
+                    <div class="module-info">
+                    </div>
+        </div>
+    </div>
+
+
+    <div class="screenshots-section">
+        <div class="screenshots-header">
+            <div class="badge">
+                <i class="fa-solid fa-images"></i> <span data-lang="badge_gallery">Gallery</span>
+            </div>
+            <h2 data-lang="gallery_title">Preview</h2>
+            <p data-lang="gallery_subtitle">Experience our software in action</p>
+        </div>
+
+        <div class="screenshot-slider">
+            <div class="slider-container">
+                <div class="slider-track" id="sliderTrack">
+                    <div class="slider-slide"><img src="config/image/screen1.png" alt="Screenshot 1" onclick="openLightbox(0)"></div>
+                    <div class="slider-slide"><img src="config/image/screen2.png" alt="Screenshot 2" onclick="openLightbox(1)"></div>
+                    <div class="slider-slide"><img src="config/image/screen3.png" alt="Screenshot 3" onclick="openLightbox(2)"></div>
+                    <div class="slider-slide"><img src="config/image/screen4.png" alt="Screenshot 4" onclick="openLightbox(3)"></div>
+                    <div class="slider-slide"><img src="config/image/screen5.png" alt="Screenshot 5" onclick="openLightbox(4)"></div>
+                </div>
+                <button class="slider-nav slider-prev" onclick="changeSlide(-1)"><i class="fa-solid fa-chevron-left"></i></button>
+                <button class="slider-nav slider-next" onclick="changeSlide(1)"><i class="fa-solid fa-chevron-right"></i></button>
+            </div>
+            <div class="slider-dots" id="sliderDots">
+                <div class="slider-dot active" onclick="goToSlide(0)"></div>
+                <div class="slider-dot" onclick="goToSlide(1)"></div>
+                <div class="slider-dot" onclick="goToSlide(2)"></div>
+                <div class="slider-dot" onclick="goToSlide(3)"></div>
+                <div class="slider-dot" onclick="goToSlide(4)"></div>
+            </div>
+            <div class="slider-counter">
+                <span id="currentSlide">1</span> / <span id="totalSlides">5</span>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="footer-container"></div>
+
+<script src="js/footer.js"></script>
+
+<div class="lightbox" id="lightbox" onclick="closeLightbox(event)">
+    <div class="lightbox-content" onclick="event.stopPropagation()">
+        <button class="lightbox-close" onclick="closeLightbox()"><i class="fa-solid fa-xmark"></i></button>
+        <button class="lightbox-nav lightbox-prev" onclick="prevImage()"><i class="fa-solid fa-chevron-left"></i></button>
+        <img src="" alt="Screenshot" id="lightboxImage">
+        <button class="lightbox-nav lightbox-next" onclick="nextImage()"><i class="fa-solid fa-chevron-right"></i></button>
+        <div class="lightbox-counter"><span id="currentIndex">1</span> / <span id="totalImages">5</span></div>
+    </div>
+</div>
+
+<div class="modal-overlay" id="signinModal" onclick="closeModal('signin', event)">
+    <div class="modal" onclick="event.stopPropagation()">
+        <button class="modal-close" onclick="closeModal('signin')"><i class="fa-solid fa-xmark"></i></button>
+        <h2 data-lang="modal_signin_title">Sign In</h2>
+        <form id="signinForm" onsubmit="handleSignIn(event)">
+            <div id="signinMessage" class="form-message"></div>
+            <div class="form-group">
+                <input type="text" id="signinUsername" class="form-input" placeholder="Username" required>
+            </div>
+            <div class="form-group">
+                <input type="password" id="signinPassword" class="form-input" placeholder="Password" required>
+            </div>
+            <button type="submit" id="signinButton" class="btn-modal" data-lang="btn_signin">Sign In</button>
+        </form>
+        <div class="modal-footer">
+            <span data-lang="form_no_account">Don't have an account?</span> 
+            <a href="#" onclick="switchModal('signin', 'signup'); return false;" data-lang="btn_signup">Sign Up</a>
+        </div>
+    </div>
+</div>
+
+<div class="modal-overlay" id="signupModal" onclick="closeModal('signup', event)">
+    <div class="modal" onclick="event.stopPropagation()">
+        <button class="modal-close" onclick="closeModal('signup')"><i class="fa-solid fa-xmark"></i></button>
+        <h2 data-lang="modal_signup_title">Sign Up</h2>
+        <form id="signupForm" onsubmit="handleSignUp(event)">
+            <div id="signupMessage" class="form-message"></div>
+            <div class="form-group">
+                <input type="text" id="signupUsername" class="form-input" placeholder="Username" required>
+            </div>
+            <div class="form-group">
+                <input type="email" id="signupEmail" class="form-input" placeholder="Email" required>
+            </div>
+            <div class="form-group">
+                <input type="password" id="signupPassword" class="form-input" placeholder="Password" required>
+            </div>
+            <div class="form-group">
+                <input type="password" id="signupConfirmPassword" class="form-input" placeholder="Confirm Password" required>
+            </div>
+            <button type="submit" id="signupButton" class="btn-modal" data-lang="btn_create_account">Create Account</button>
+        </form>
+        <div class="modal-footer">
+            <span data-lang="form_have_account">Already have an account?</span> 
+            <a href="#" onclick="switchModal('signup', 'signin'); return false;" data-lang="btn_signin">Sign In</a>
+        </div>
+    </div>
+</div>
+
+<script>
+    const API_URL = CONFIG.clientLinkUrl;
+
+    function animateCountUp(element, end, duration) {
+        let start = 0;
+        let startTime = null;
+        
+        function easeOutQuart(t) {
+            return 1 - Math.pow(1 - t, 4);
+        }
+        
+        function animate(currentTime) {
+            if (!startTime) startTime = currentTime;
+            const elapsed = currentTime - startTime;
+            const progress = Math.min(elapsed / duration, 1);
+            const easedProgress = easeOutQuart(progress);
+            const current = Math.floor(easedProgress * end);
+            element.textContent = current.toLocaleString();
+            if (progress < 1) {
+                requestAnimationFrame(animate);
+            } else {
+                element.textContent = end.toLocaleString();
+            }
+        }
+        
+        requestAnimationFrame(animate);
+    }
+
+    async function fetchUserCount() {
+        try {
+            const response = await fetch(`${API_URL}/user/getNumberUser`);
+            const text = await response.text();
+            const num = Number(text);
+            const userCountElement = document.getElementById('userCount');
+            if (userCountElement && !isNaN(num)) {
+                animateCountUp(userCountElement, num, 1200);
+            }
+        } catch (e) {
+            const userCountElement = document.getElementById('userCount');
+            if (userCountElement) {
+                userCountElement.textContent = '0';
+            }
+        }
+    }
+
+    function showMessage(elementId, message, isError) {
+        const el = document.getElementById(elementId);
+        el.textContent = message;
+        el.className = 'form-message ' + (isError ? 'error' : 'success');
+    }
+
+    function clearMessage(elementId) {
+        const el = document.getElementById(elementId);
+        el.textContent = '';
+        el.className = 'form-message';
+    }
+
+    function setButtonLoading(buttonId, isLoading) {
+        const btn = document.getElementById(buttonId);
+        btn.disabled = isLoading;
+        if (isLoading) {
+            btn.dataset.originalText = btn.textContent;
+            btn.textContent = translations[currentLang].loading || 'Loading...';
+        } else {
+            btn.textContent = btn.dataset.originalText || btn.textContent;
+        }
+    }
+
+    async function handleLogin(username, password) {
+        try {
+            const response = await fetch(`${API_URL}/auth/login`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    username: username,
+                    password: password
+                })
+            });
+
+            const result = await response.json();
+
+            if (response.ok && result.token) {
+                localStorage.setItem('token', result.token);
+                return true;
+            }
+            return false;
+        } catch (error) {
+            return false;
+        }
+    }
+
+    async function handleSignIn(e) {
+        e.preventDefault();
+        clearMessage('signinMessage');
+
+        const username = document.getElementById('signinUsername').value;
+        const password = document.getElementById('signinPassword').value;
+
+        if (!username) {
+            showMessage('signinMessage', translations[currentLang].error_username, true);
+            return;
+        }
+
+        if (!password || password.length < 6) {
+            showMessage('signinMessage', translations[currentLang].error_password, true);
+            return;
+        }
+
+        setButtonLoading('signinButton', true);
+
+        try {
+            const response = await fetch(`${API_URL}/auth/login`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    username: username,
+                    password: password
+                })
+            });
+
+            const result = await response.json();
+
+            if (response.ok && result.token) {
+                localStorage.setItem('token', result.token);
+                showMessage('signinMessage', translations[currentLang].login_success, false);
+                setTimeout(() => {
+                    closeModal('signin');
+                    window.location.href = '/cabinet';
+                }, 1000);
+            } else {
+                showMessage('signinMessage', result.message || translations[currentLang].login_error, true);
+            }
+        } catch (error) {
+            showMessage('signinMessage', translations[currentLang].login_error, true);
+        } finally {
+            setButtonLoading('signinButton', false);
+        }
+    }
+
+    async function handleSignUp(e) {
+        e.preventDefault();
+        clearMessage('signupMessage');
+
+        const username = document.getElementById('signupUsername').value;
+        const email = document.getElementById('signupEmail').value;
+        const password = document.getElementById('signupPassword').value;
+        const confirmPassword = document.getElementById('signupConfirmPassword').value;
+
+        if (!username || username.length < 3) {
+            showMessage('signupMessage', translations[currentLang].error_login, true);
+            return;
+        }
+
+        if (!email || !email.includes('@')) {
+            showMessage('signupMessage', translations[currentLang].error_email, true);
+            return;
+        }
+
+        if (!password || password.length < 6) {
+            showMessage('signupMessage', translations[currentLang].error_password, true);
+            return;
+        }
+
+        if (password !== confirmPassword) {
+            showMessage('signupMessage', translations[currentLang].error_password_mismatch, true);
+            return;
+        }
+
+        setButtonLoading('signupButton', true);
+
+        try {
+            const now = new Date();
+            const regDateTime = now.toISOString();
+
+            const response = await fetch(`${API_URL}/auth/register`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    username: username,
+                    password: password,
+                    email: email,
+                    role: 'USER',
+                    regDate: regDateTime
+                })
+            });
+
+            if (response.ok) {
+                showMessage('signupMessage', translations[currentLang].register_success, false);
+                
+                const loginSuccess = await handleLogin(username, password);
+                
+                if (loginSuccess) {
+                    setTimeout(() => {
+                        closeModal('signup');
+                        window.location.href = '/cabinet';
+                    }, 1000);
+                } else {
+                    setTimeout(() => {
+                        closeModal('signup');
+                        openModal('signin');
+                    }, 2000);
+                }
+
+                document.getElementById('signupUsername').value = '';
+                document.getElementById('signupEmail').value = '';
+                document.getElementById('signupPassword').value = '';
+                document.getElementById('signupConfirmPassword').value = '';
+            } else {
+                const errorText = await response.text();
+                showMessage('signupMessage', errorText || translations[currentLang].register_error, true);
+            }
+        } catch (error) {
+            showMessage('signupMessage', translations[currentLang].connection_error + ': ' + error.message, true);
+        } finally {
+            setButtonLoading('signupButton', false);
+        }
+    }
+
+    const translations = {
+        en: {
+            nav_home: "Home", nav_products: "Products", nav_privacy: "Privacy", nav_terms: "Terms",
+            btn_signin: "Sign In", btn_signup: "Sign Up", badge_hero: "Premium Experience!",
+            hero_title: "We give strength",
+            hero_subtitle: "Discover a revolutionary experience with stunning visual design, smart bypasses and cutting-edge features that unlock new dimensions of gameplay.",
+            btn_getstarted: "Get Started", btn_contact: "Register", badge_features: "Features",
+            section_title: "Explore More!",
+            section_subtitle: "Our software delivers powerful and intuitive tools to elevate your experience.",
+            chat_assistant: "Assistant", chat_player: "Player",
+            chat_msg1: "Absolutely! What can I do for you?",
+            chat_msg2: "Hello! I need assistance with configuration.",
+            chat_msg3: "No problem! Check your DMs for the guide.",
+            info_support_title: "Round-the-Clock Assistance",
+            info_support_text: "Got questions? Our dedicated team is available anytime to guide you — from initial setup to latest patches. Stuck somewhere? Just reach out!",
+            info_stability_title: "Rock-Solid Performance",
+            info_stability_text: "has maintained flawless operation for years. Our developers continuously optimize and push updates to guarantee seamless functionality across all versions.",
+            stat_uptime: "Uptime", stat_years: "Years Running", stat_users: "Members",
+            module_killaura: "Auto-attack nearby enemies.", module_speed: "Enhanced movement for quick escapes.",
+            module_autototem: "Auto-equips totem when needed.", module_hitbox: "Enlarged target areas for combat.",
+            badge_gallery: "Gallery", gallery_title: "Preview", gallery_subtitle: "Experience our software in action",
+            modal_signin_title: "Sign In", modal_signup_title: "Sign Up",
+            form_no_account: "Don't have an account?", form_have_account: "Already have an account?",
+            btn_create_account: "Create Account",
+            footer_description: "The ultimate gaming enhancement solution. Elevate your gameplay with powerful features and undetectable bypasses.",
+            footer_navigation: "Navigation", footer_support: "Support",
+            footer_download: "Download", footer_faq: "EULA", footer_contact: "Contact Us",
+            footer_rights: "All rights reserved.",
+            captcha_error: "Please complete the captcha verification.",
+            error_username: "Please enter username.",
+            error_password: "Password must be at least 6 characters.",
+            error_email: "Please enter a valid email.",
+            error_login: "Username must be at least 3 characters.",
+            error_password_mismatch: "Passwords do not match.",
+            login_success: "Login successful! Redirecting...",
+            login_error: "Invalid username or password.",
+            register_success: "Registration successful!",
+            register_error: "Registration error.",
+            connection_error: "Connection error",
+            loading: "Loading..."
+        },
+        ru: {
+            nav_home: "Главная", nav_products: "Продукты", nav_privacy: "Приватность", nav_terms: "Условия",
+            btn_signin: "Войти", btn_signup: "Регистрация", badge_hero: "Премиум опыт!",
+            hero_title: "Мы даём силу",
+            hero_subtitle: "Откройте революционный опыт с потрясающим визуальным дизайном, умными обходами и передовыми функциями, которые открывают новые грани геймплея.",
+            btn_getstarted: "Начать", btn_contact: "Регистрация", badge_features: "Возможности",
+            section_title: "Узнай больше!",
+            section_subtitle: "Наш софт предоставляет мощные и интуитивные инструменты для улучшения вашего опыта.",
+            chat_assistant: "Ассистент", chat_player: "Игрок",
+            chat_msg1: "Конечно! Чем могу помочь?",
+            chat_msg2: "Привет! Мне нужна помощь с настройкой.",
+            chat_msg3: "Без проблем! Проверь ЛС, там гайд.",
+            info_support_title: "Поддержка 24/7",
+            info_support_text: "Есть вопросы? Наша команда доступна в любое время — от начальной настройки до последних обновлений. Застрял? Просто напиши нам!",
+            info_stability_title: "Надёжная работа",
+            info_stability_text: "работает стабильно уже много лет. Наши разработчики постоянно оптимизируют и выпускают обновления для бесперебойной работы на всех версиях.",
+            stat_uptime: "Аптайм", stat_years: "Лет работы", stat_users: "Пользователей",
+            module_killaura: "Авто-атака ближайших врагов.", module_speed: "Ускоренное передвижение для побега.",
+            module_autototem: "Автоматически надевает тотем.", module_hitbox: "Увеличенные хитбоксы для боя.",
+            badge_gallery: "Галерея", gallery_title: "Превью", gallery_subtitle: "Посмотрите наш софт в действии",
+            modal_signin_title: "Вход", modal_signup_title: "Регистрация",
+            form_no_account: "Нет аккаунта?", form_have_account: "Уже есть аккаунт?",
+            btn_create_account: "Создать аккаунт",
+            footer_description: "Лучшее решение для улучшения игры. Поднимите свой геймплей с мощными функциями и необнаруживаемыми обходами.",
+            footer_navigation: "Навигация", footer_support: "Поддержка",
+            footer_download: "Скачать", footer_faq: "EULA", footer_contact: "Связаться",
+            footer_rights: "Все права защищены.",
+            captcha_error: "Пожалуйста, пройдите проверку капчи.",
+            error_username: "Введите имя пользователя.",
+            error_password: "Пароль должен быть не менее 6 символов.",
+            error_email: "Введите корректный email.",
+            error_login: "Логин должен быть не менее 3 символов.",
+            error_password_mismatch: "Пароли не совпадают.",
+            login_success: "Вход выполнен! Перенаправление...",
+            login_error: "Неверный логин или пароль.",
+            register_success: "Регистрация успешна!",
+            register_error: "Ошибка регистрации.",
+            connection_error: "Ошибка соединения",
+            loading: "Загрузка..."
+        }
+    };
+
+    let currentLang = 'en';
+
+    function setLanguage(lang) {
+        currentLang = lang;
+        document.querySelectorAll('.lang-btn').forEach(btn => {
+            btn.classList.toggle('active', btn.textContent === lang.toUpperCase());
+        });
+        document.querySelectorAll('[data-lang]').forEach(el => {
+            const key = el.getAttribute('data-lang');
+            if (translations[lang][key]) el.textContent = translations[lang][key];
+        });
+        document.documentElement.lang = lang;
+        localStorage.setItem('lang', lang);
+    }
+
+    function hexToRgb(hex) {
+        const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+        return result ? { r: parseInt(result[1], 16), g: parseInt(result[2], 16), b: parseInt(result[3], 16) } : { r: 164, g: 188, b: 253 };
+    }
+
+    function adjustColor(hex, amount) {
+        const rgb = hexToRgb(hex);
+        const adjust = (val) => Math.max(0, Math.min(255, val + amount));
+        const toHex = (val) => val.toString(16).padStart(2, '0');
+        return `#${toHex(adjust(rgb.r))}${toHex(adjust(rgb.g))}${toHex(adjust(rgb.b))}`;
+    }
+
+    function checkHashAndOpenModal() {
+        const hash = window.location.hash;
+        if (hash === '#login') {
+            setTimeout(() => {
+                openModal('signin');
+            }, 100);
+        } else if (hash === '#register') {
+            setTimeout(() => {
+                openModal('signup');
+            }, 100);
+        }
+    }
+
+    function applyConfig() {
+        document.querySelectorAll('.client-name').forEach(el => el.textContent = CONFIG.clientName);
+        document.title = CONFIG.clientName + " - Your win!";
+        const root = document.documentElement;
+        const rgb = hexToRgb(CONFIG.accentColor);
+        root.style.setProperty('--accent-color', CONFIG.accentColor);
+        root.style.setProperty('--accent-hover', adjustColor(CONFIG.accentColor, -20));
+        root.style.setProperty('--accent-r', rgb.r);
+        root.style.setProperty('--accent-g', rgb.g);
+        root.style.setProperty('--accent-b', rgb.b);
+        
+        setLanguage(localStorage.getItem('lang') || 'en');
+        fetchUserCount();
+        
+        checkHashAndOpenModal();
+    }
+
+    document.addEventListener('DOMContentLoaded', applyConfig);
+
+    window.addEventListener('hashchange', checkHashAndOpenModal);
+
+    const moduleStates = { killaura: false, speed: false, autototem: false, hitbox: false };
+
+    function make3D(part) {
+        part.classList.add('is-3d');
+        part.innerHTML = `
+            <div class="face front"></div><div class="face back"></div>
+            <div class="face left"></div><div class="face right"></div>
+            <div class="face top"></div><div class="face bottom"></div>
+            ${part.id === 'skinHead' ? `<div class="skin-crosshair-3d" id="skinCrosshair3d"><div class="crosshair-line horizontal"></div><div class="crosshair-line vertical"></div><div class="crosshair-dot"></div></div>` : ''}
+        `;
+    }
+
+    function make2D(part) {
+        part.classList.remove('is-3d');
+        part.innerHTML = part.id === 'skinHead' ? `<div class="skin-crosshair" id="skinCrosshair"><div class="crosshair-line horizontal"></div><div class="crosshair-line vertical"></div><div class="crosshair-dot"></div></div>` : '';
+    }
+
+    function updateSkinState() {
+        const skin = document.getElementById('minecraftSkin');
+        const hitbox = document.getElementById('hitboxOutline');
+        const head = document.getElementById('skinHead');
+        const body = document.getElementById('skinBody');
+        const armLeft = document.getElementById('skinArmLeft');
+        const armRight = document.getElementById('skinArmRight');
+        const legLeft = document.getElementById('skinLegLeft');
+        const legRight = document.getElementById('skinLegRight');
+        const allParts = [head, body, armLeft, armRight, legLeft, legRight];
+        
+        skin.classList.remove('is-3d', 'is-running');
+        hitbox.classList.remove('visible');
+        head.classList.remove('head-fall');
+        [armLeft, armRight, legLeft, legRight].forEach(p => p.classList.remove('running'));
+        allParts.forEach(part => make2D(part));
+        updateCrosshair();
+
+        if (moduleStates.killaura) {
+            skin.classList.add('is-3d');
+            allParts.forEach(part => make3D(part));
+            updateCrosshair();
+        }
+        if (moduleStates.speed) {
+            skin.classList.add('is-running');
+            allParts.forEach(part => make3D(part));
+            [armLeft, armRight, legLeft, legRight].forEach(p => p.classList.add('running'));
+            updateCrosshair();
+        }
+        if (moduleStates.autototem) {
+            skin.classList.add('is-3d');
+            allParts.forEach(part => make3D(part));
+            head.classList.add('head-fall');
+            updateCrosshair();
+        }
+        if (moduleStates.hitbox) {
+            skin.classList.add('is-3d');
+            hitbox.classList.add('visible');
+            allParts.forEach(part => make3D(part));
+            updateCrosshair();
+        }
+        if (moduleStates.speed) hitbox.classList.remove('visible');
+    }
+
+    function updateCrosshair() {
+        const c2d = document.getElementById('skinCrosshair');
+        const c3d = document.getElementById('skinCrosshair3d');
+        if (moduleStates.killaura) {
+            c2d?.classList.add('active');
+            c3d?.classList.add('active');
+        } else {
+            c2d?.classList.remove('active');
+            c3d?.classList.remove('active');
+        }
+    }
+
+    function toggleModule(el) {
+        el.classList.toggle('active');
+        moduleStates[el.dataset.module] = el.classList.contains('active');
+        updateSkinState();
+    }
+
+    const screenshots = ['config/image/screen1.png', 'config/image/screen2.png', 'config/image/screen3.png', 'config/image/screen4.png', 'config/image/screen5.png'];
+    let currentSlideIndex = 0, autoSlideInterval;
+
+    function updateSlider() {
+        document.getElementById('sliderTrack').style.transform = `translateX(-${currentSlideIndex * 100}%)`;
+        document.querySelectorAll('.slider-dot').forEach((dot, i) => dot.classList.toggle('active', i === currentSlideIndex));
+        document.getElementById('currentSlide').textContent = currentSlideIndex + 1;
+    }
+
+    function changeSlide(dir) { currentSlideIndex = (currentSlideIndex + dir + screenshots.length) % screenshots.length; updateSlider(); resetAutoSlide(); }
+    function goToSlide(i) { currentSlideIndex = i; updateSlider(); resetAutoSlide(); }
+    function startAutoSlide() { autoSlideInterval = setInterval(() => { currentSlideIndex = (currentSlideIndex + 1) % screenshots.length; updateSlider(); }, 5000); }
+    function resetAutoSlide() { clearInterval(autoSlideInterval); startAutoSlide(); }
+    document.addEventListener('DOMContentLoaded', startAutoSlide);
+
+    let currentImageIndex = 0;
+    function openLightbox(i) {
+        currentImageIndex = i;
+        document.getElementById('lightboxImage').src = screenshots[i];
+        document.getElementById('currentIndex').textContent = i + 1;
+        document.getElementById('lightbox').classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+    function closeLightbox(e) { if (e && e.target !== e.currentTarget) return; document.getElementById('lightbox').classList.remove('active'); document.body.style.overflow = ''; }
+    function nextImage() { currentImageIndex = (currentImageIndex + 1) % screenshots.length; updateLightboxImage(); }
+    function prevImage() { currentImageIndex = (currentImageIndex - 1 + screenshots.length) % screenshots.length; updateLightboxImage(); }
+    function updateLightboxImage() { document.getElementById('lightboxImage').src = screenshots[currentImageIndex]; document.getElementById('currentIndex').textContent = currentImageIndex + 1; }
+
+    function openModal(type) { 
+        const modal = document.getElementById(type + 'Modal');
+        modal.classList.add('active'); 
+        document.body.style.overflow = 'hidden';
+        clearMessage(type + 'Message');
+    }
+    
+    function closeModal(type, e) { 
+        if (e && e.target !== e.currentTarget) return; 
+        document.getElementById(type + 'Modal').classList.remove('active'); 
+        document.body.style.overflow = ''; 
+        
+        if (window.location.hash === '#login' || window.location.hash === '#register') {
+            history.pushState("", document.title, window.location.pathname + window.location.search);
+        }
+    }
+    
+    function switchModal(from, to) { 
+        closeModal(from); 
+        setTimeout(() => openModal(to), 400); 
+    }
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            closeLightbox();
+            closeModal('signin');
+            closeModal('signup');
+        }
+        if (document.getElementById('lightbox').classList.contains('active')) {
+            if (e.key === 'ArrowRight') nextImage();
+            if (e.key === 'ArrowLeft') prevImage();
+        }
+    });
+</script>
+
+</body>
+</html>
